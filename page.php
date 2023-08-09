@@ -16,21 +16,15 @@
  ?>
 
  <!-- Conteúdo -->
-
+fdgdfgfd
    <div class="row content_box">
 
-      <div class="col-xl-9 content padding_content" id="texto">
-          <h1 class="error_404">404</h1>
-          <span class="error_404_text"> Página não encontrada!</span>
-          
-          <div class="busca_page">
-              <?php get_search_form(); ?>
-          </div>
-              
+      <div class="col-xs-12 col-md-9 content padding_content" id="texto">
+      	<div class="banner-page"><?php echo (get_the_post_thumbnail($post->ID)); ?></div>
+        <?php the_content(); ?>
+        
       </div>
-       
-       
-      <div class="col-xl-3">
+      <div class="col-xs-12 col-md-3">
           
          <?php dynamic_sidebar('Right Widget Area') ?> 
           
