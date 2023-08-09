@@ -1,0 +1,937 @@
+@import url('https://fonts.googleapis.com/css2?family=Alata&family=Roboto:wght@300;400;500;700&display=swap');
+// Variáveis
+$corBranco: #fff;
+$corCinzaAzulado: #314B66;
+$corLogoAzul: #3274B7;
+$corLogoVerde: #29B552;
+$corCinzaClaro: #F5F5F5;
+$corCinzaClaro2: #D9D9D9;
+$font-family: 'Roboto','Arial', sans-serif;
+$tempo-transicao: 10s;
+$max-width-conteudo: 1440px;
+$max-width-conteudo-med: 940px;
+$font-size-24: 24px;
+$font-size-14: 14px;
+$font-size-20: 20px;
+$font-size-30: 30px;
+$font-size-96: 96px;
+$padding-cont-cham:40px 0;
+$border-radius: 10px;
+$box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+
+// Mixin
+@mixin font-options($size) {
+    font-family: $font-family;
+    font-weight: $size;
+}
+
+@mixin basic-column() {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: $max-width-conteudo;
+  margin: 0 auto;
+}
+
+@mixin paralax($img){
+    background-image: url($img);
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+@mixin default-cham-white(){
+  background-color: $corBranco;
+  color: $corCinzaAzulado;
+  padding: $padding-cont-cham;
+
+  h2{
+    @include font-options(300);
+    text-align: center;
+    width: 100%;
+    font-size: $font-size-30;
+    color: $corLogoAzul;
+    margin: 0 0 10px 0;
+  }
+
+  p{
+    text-align: center;
+    display: block;
+    width: 100%;
+    margin: 0;
+  }
+
+  .subtitle{
+    color: $corCinzaAzulado;
+  }
+}
+
+// Estilos gerais
+html {
+  color: $corCinzaAzulado;
+  line-height: 20px;
+}
+h4{
+  font-size: $font-size-24;
+  @include font-options(300);
+  margin: 10px 0;
+  color: $corLogoAzul;
+  line-height: 25px;
+}
+h5{
+  margin: 10px 0
+}
+a{
+  @include font-options(700);
+  color: $corLogoAzul;
+  text-decoration: none;
+  &:hover{
+    text-decoration: underline;
+  }
+}
+html{
+  @include font-options(400);
+  color: $corCinzaAzulado;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+hr{
+  width: 100%;
+  background: $corCinzaClaro;
+  border: 0;
+  height: 2px;
+}
+
+button {
+  background-image: linear-gradient(to top, $corLogoAzul 0%, $corLogoVerde 50%);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.mb{
+  margin-bottom: 20px !important;
+}
+
+.border-left{
+  border-left: 2px solid $corCinzaClaro;
+  padding-left: 10px;
+}
+
+// Estilos do menu
+.menu {
+  background-color: $corBranco;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  .logo {
+    font-size: 24px;
+    margin-right: 20px;
+    flex: auto;
+    padding-left: 30px;
+  }
+
+  .menu-links {
+    flex: auto;
+    ul {
+      list-style: none;
+      display: flex;
+      padding: 0;
+      margin: 0;
+      justify-content: center;
+
+      li {
+        margin-left: 20px;
+        position: relative;
+
+        a {
+          color: $corCinzaAzulado;
+          text-decoration: none;
+        }
+
+        .submenu {
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          background-color: $corLogoAzul;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+          width: 100%;
+          padding: 0;
+          
+          li {
+            margin: 0;
+            padding: 10px;
+            a {
+              color: $corBranco;
+              text-decoration: none;
+            }
+            &:hover{
+              background: $corCinzaAzulado;
+            }
+          }
+        }
+
+        &:hover .submenu {
+          display: block;
+        }
+      }
+    }
+  }
+  .social{
+    flex: auto;
+    display: flex;
+  }
+  .toggle{
+      width: 35px;
+      .menu-toggle {
+        display: table;
+        margin-top: 10px;
+        width: 25px;
+        float: right;
+        cursor: pointer;
+            
+        span {
+          background-color: $corCinzaAzulado;
+          height: 2px;
+          width: 25px;
+        }
+      }
+  }
+
+  .social{
+    ul{
+      display: flex;
+      justify-content: flex-end;
+      flex: auto;
+      list-style: none;
+      li{
+        flex: none;
+        width: auto;
+        display: flex;
+        align-items: center;
+        padding: 5px;
+        span{
+          margin-left: 5px;
+          display: block;
+        }
+      }
+    }
+
+  }
+
+}
+
+.cont_five_column {
+  
+  @include basic-column();
+
+  .item {
+    width: 18%;
+    margin: 1%;
+    box-sizing: border-box;
+
+    @media screen and (max-width: 768px) {
+      width: 31.33%; // 2 colunas em telas menores
+      margin: 1%;
+    }
+
+    @media screen and (max-width: 480px) {
+      width: 23%; // 1 coluna em telas ainda menores
+      margin: 1%;
+    }
+  }
+}
+
+.cont_four_column {
+  @include basic-column();
+
+  .item {
+    width: 25%;
+    padding: 10px;
+    box-sizing: border-box;
+
+    @media screen and (max-width: 768px) {
+      width: 50%; // 2 colunas em telas menores
+    }
+
+    @media screen and (max-width: 480px) {
+      width: 100%; // 1 coluna em telas ainda menores
+    }
+  }
+}
+
+.cont_three_column {
+  @include basic-column();
+
+  .item {
+    width: 33.33%;
+    padding: 10px;
+    box-sizing: border-box;
+  
+    @media screen and (max-width: 768px) {
+      //width: 50%; // 2 colunas em telas menores
+    }
+  
+    @media screen and (max-width: 480px) {
+      width: 100%; // 1 coluna em telas ainda menores
+    }
+  }
+}
+
+.cont_two_column {
+  @include basic-column();
+
+  .item {
+    width: 50%;
+    padding: 10px;
+    box-sizing: border-box;
+  
+    @media screen and (max-width: 480px) {
+      width: 100%; // 1 coluna em telas ainda menores
+    }
+  }
+}
+
+.cont_one_column {
+  @include basic-column();
+}
+
+.box-full{
+  width: 96%;
+  padding: 40px 2%;
+  &.verde{
+    background: $corLogoVerde;
+    .title{
+      color: $corBranco;
+    }
+    .subtitle{
+      color: $corBranco;
+    }
+  }
+  &.verde-gradiente{
+    background-image: linear-gradient(to top, $corLogoAzul 0%, $corLogoVerde 20%);
+    .title{
+      color: $corBranco;
+    }
+    .subtitle{
+      color: $corBranco;
+    }
+  }
+  
+  &.verde-gradiente-50{
+    background-image: linear-gradient(to top, $corLogoAzul 0%, $corLogoVerde 50%);
+  }
+
+  &.azul{
+    background: $corLogoAzul;
+  }
+  .title{
+    text-align: center;
+    margin: 0 0 10px 0;
+    color: $corBranco;
+  }
+  .subtitle{
+    text-align: center;
+    display: block;
+    margin: 0;
+    color: $corBranco;
+  }
+}
+
+//Cham Servicos
+#chams_servicos{
+  background-color: $corLogoVerde;
+  color: $corBranco;
+  padding: $padding-cont-cham;
+  .item{
+    display: flex;
+    flex-direction: column;
+    padding: 0 40px;
+
+    img{
+      width: auto;
+      margin: 0 auto 10px auto
+    }
+    h3{
+      @include font-options(300);
+      font-size: $font-size-24;
+      margin: 0 auto;
+      max-width: 211px;
+    
+      p{
+        font-size: $font-size-14;
+        @include font-options(300);
+        margin: 0 auto;
+        text-align: justify;
+        display: block;
+      }
+    }
+  }
+}
+
+//Cham quem somos
+#cham_quemsomos{
+
+  @include default-cham-white();
+
+  .item{
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+
+    img{
+      width: auto;
+      margin: 0 auto 10px auto
+    }
+    h3{
+      @include font-options(500);
+      font-size: $font-size-24;
+      margin: 0 auto;
+      max-width: 211px;
+      text-transform: uppercase;
+      text-align: center;
+    
+      p{
+        text-transform: none;
+        font-size: $font-size-14;
+        @include font-options(300);
+        margin: 0 auto;
+        text-align: justify;
+        display: block;
+      }
+    }
+  }
+}
+//Cham nossa presenca
+#cham_nossa_presenca{
+  color: $corBranco;
+  padding: 40px 0 10px 0;
+
+  h2{
+    @include font-options(500);
+    text-align: center;
+    width: 100%;
+    font-size: $font-size-30;
+    margin: 0 0 10px 0;
+  }
+
+  p{
+    text-align: center;
+    display: block;
+    width: 100%;
+    margin: 0;
+  }
+
+  .item{
+    display: flex;
+    flex-direction: column;
+    padding: 20px 40px;
+    h3{
+      @include font-options(500);
+      font-size: $font-size-96;
+      margin: 0 auto;
+      max-width: 211px;
+      text-transform: uppercase;
+      text-align: center;
+
+      span{
+        font-size: 64px;
+        text-transform: lowercase;
+      }
+    
+      p{
+        text-transform: none;
+        font-size: $font-size-14;
+        @include font-options(700);
+        margin: 0 auto;
+        text-align: justify;
+        display: block;
+      }
+    }
+  }
+  hr{
+    background: $corBranco;
+  }
+}
+
+#cham_nossa_principais{
+  color: $corBranco;
+  padding: 10px 0 40px 0;
+  .item{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+
+    h3{
+      @include font-options(500);
+      font-size: $font-size-30;
+      margin: 0 auto;
+      max-width: 100%;
+      text-align: left;
+    
+      p{
+        text-transform: none;
+        font-size: $font-size-20;
+        @include font-options(400);
+        margin: 10px auto;
+        text-align: justify;
+        display: block;
+      }
+    }
+    &:first-child{
+      border-right: 2px solid $corBranco;
+    }
+  }
+}
+
+#cham_ajuda{
+  color: $corBranco;
+  color: $corBranco;
+  padding: $padding-cont-cham;
+  .item{
+    display: flex;
+    flex-direction: column;
+    padding: 20px 20px;
+    background: $corLogoAzul;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+    img{
+      width: auto;
+      margin: 0 auto 10px auto
+    }
+    h3{
+      @include font-options(300);
+      font-size: $font-size-24;
+      margin: 0 auto;
+      max-width: 211px;
+    
+      p{
+        font-size: $font-size-14;
+        @include font-options(300);
+        margin: 0 auto;
+        text-align: justify;
+        display: block;
+      }
+    }
+  }
+}
+
+.paralax-ajuda{
+  @include paralax("img/bg_ajuda.jpg");
+}
+
+#cham_projetos{
+  @include default-cham-white();
+}
+
+/*interna*/
+
+.titulo-interna{
+  color: $corLogoAzul;
+  h1{
+    @include font-options(200);
+    font-size: $font-size-30;
+    margin: 0 0 10px 0;
+    div{
+      margin: 0 auto;
+      padding-left: 20px;;
+    }
+  }
+
+  background-image: linear-gradient(to right, $corBranco 0%,$corLogoAzul 50%, $corLogoVerde 100%);
+
+  >div{
+    background: url(img/bg_circulos.png);
+    background-position: center;
+    padding: $padding-cont-cham;
+  }
+
+}
+
+.texto-foto{
+  max-width: $max-width-conteudo;
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+  .img_destaque{
+    padding: 10px;
+    max-width: 530px;
+    img{
+      border-bottom-right-radius: $border-radius + 100;
+      width: 100%;
+    }
+  }
+  .texto{
+    padding: 10px;
+  }
+  div{
+    flex: 1;
+  }
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    .img_destaque{
+      margin: 0 auto;
+    }
+  }
+
+}
+
+.tab-list-horizontal{
+  display: flex;
+  flex-direction: row;
+  max-width: $max-width-conteudo;
+  margin: 0 auto;
+ 
+  >ul{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    flex: 0 0 25%;
+    li{
+      padding: 10px 5%;
+      cursor: pointer;
+      margin-bottom: 5px;
+      @include font-options(400);
+      font-size: $font-size-14;
+      color: $corBranco;
+      background: $corLogoVerde;
+      width: 90%;
+      text-transform: uppercase;
+      &.active,&:hover{
+        @include font-options(700);
+        background: $corLogoAzul;
+      }
+    }
+    :last-child{
+      margin-bottom: 0;
+    }
+    ::after {
+      @include font-options(300);
+      font-size: $font-size-30;
+      content: ">";
+      position: absolute;
+      float: right;
+      transform: rotate(0deg);
+      position: relative;  
+      transition: margin-right 0.3s ease-in-out;
+    }
+    :hover::after {
+      margin-right: -10px;
+ 
+    }
+
+  }
+  >div{
+    background: $corLogoAzul;
+    color: $corBranco;
+    flex: 1;
+    div{
+      padding:20px;
+      display: none;
+    }
+ 
+    .active{
+      display: block;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    >ul{
+      flex: 1;
+      li::after {
+        transform: rotate(90deg);
+        transition: margin-top 0.3s ease-in-out;
+      }
+      li:hover::after {
+        margin-top: -5px;
+      }
+    }
+  }
+
+}
+
+.form-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+#contact-form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  flex-direction: row;
+  .form-column {
+    flex: 1;
+    max-width: calc(50% - 10px);
+  }
+  
+  label, input, textarea {
+    display: block;
+    margin-bottom: 10px;
+    width: 100%;
+    border: 0;
+    background: $corCinzaClaro2;
+    padding: 5px;
+  }
+  
+  button {
+    width: 100%;
+  }
+}
+
+
+/*fim interna*/
+
+footer{
+  color: $corBranco;
+  padding: $padding-cont-cham;
+  .item{
+
+    h3{
+      @include font-options(300);
+      font-size: $font-size-24;
+      max-width: 211px;
+      color: $corBranco;
+      text-align: left;
+      margin: 0;
+      img{
+        width: 100%;
+      }
+    
+      p{
+        font-size: $font-size-14;
+        @include font-options(300);
+        margin: 0 auto;
+        text-align: justify;
+        display: block;
+      }
+    }
+
+    &:nth-of-type(2){
+      padding-left: 40px;
+    }
+  }
+  hr{
+    background: $corBranco;
+  }
+}
+
+
+// Estilos do menu responsivo MENU
+@media screen and (max-width: 768px) {
+
+    .menu {
+
+        
+        .menu-links {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            
+            ul{
+                flex-direction: column;
+                justify-content: space-between;
+            }
+
+            &.show {
+            display: flex;
+            }
+
+            li {
+            margin: 10px 0;
+            }
+
+            .has-submenu {
+            .submenu {
+                display: none;
+                position: static;
+                background-color: transparent;
+                box-shadow: none;
+
+                li {
+                a {
+                    color: $corCinzaAzulado;
+                    text-decoration: none;
+                }
+                }
+            }
+
+            &.show .submenu {
+                display: block;
+            }
+            }
+        }
+        .toggle{
+            
+            .menu-toggle {
+                display: table;
+                margin-top: 10px;
+            }
+    
+            .menu-toggle.active {
+                .menu-links {
+                display: flex;
+                }
+            }
+    
+            .menu-toggle span {
+                background-color: $corCinzaAzulado;
+                height: 2px;
+                width: 25px;
+                display: block;
+                margin: 5px;
+            }
+        }
+    }
+}
+
+// Estilos do slideshow
+.slideshow-container {
+  position: relative;
+  max-width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+
+  .slide {
+    display: none;
+
+    &.fade {
+      animation: fade $tempo-transicao ease-in-out infinite;
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+
+    .text {
+      position: absolute;
+      top: 50%;
+      margin-top: -100px;
+      left: 0;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+    }
+  }
+}
+
+// Animação do slideshow
+@keyframes fade {
+  0%, 100% { opacity: 0; }
+  20%, 80% { opacity: 1; }
+}
+
+
+#projetos-carousel{
+  padding: $padding-cont-cham;
+  max-width: $max-width-conteudo;
+  margin: 0 auto;
+  .carousel-cell {
+    width: 28%;
+    margin-right: 10px;
+    border-radius: 5px;
+    counter-increment: carousel-cell;
+    height: 340px;
+    a{
+      display: block;
+      width: 228px;
+      height: 333px;
+      margin: 0 12%;
+      overflow: hidden;
+      div{
+          position: absolute;
+          top: 20px;
+          transition: transform 0.3s ease;
+          width: 228px;
+        
+        img{
+          margin: 0 auto;
+          border-radius: $border-radius;
+        }
+
+        h3{
+          @include font-options(300);
+          font-size: $font-size-20;
+          margin: 0 auto;
+       
+          p{
+            text-transform: none;
+            font-size: $font-size-14;
+            @include font-options(300);
+            margin: 5px auto 0 auto;
+            text-align: justify;
+            display: block;
+          }
+        }
+
+        
+      }
+
+      &:hover div {
+        transform: translateY(-20px);
+      }
+
+    }
+  }
+
+  .flickity-page-dots{
+    top: 20px;
+    bottom: auto;
+  }
+
+}
+
+#header-carousel{
+  .carousel-cell {
+    width: 100%;
+    margin-right: 10px;
+    background: $corLogoVerde;
+    img{
+      width: 100%;
+    }
+    .text{
+      position: absolute;
+      width: 40%;
+      top: 50%;
+      margin-top: -100px;
+      line-height: 120px;
+      color: #fff;
+      left: 10%;
+      font-size: $font-size-96;
+      @include font-options(300);
+      span{
+        font-size: $font-size-24;
+        @include font-options(400);
+        display: block;
+        line-height: normal;
+      }
+    }
+  }
+  
+  /* cell number */
+  .carousel-cell:before {
+    display: block;
+    text-align: center;
+    line-height: 200px;
+    font-size: 80px;
+    color: white;
+  }
+  .flickity-page-dots{
+    bottom: 20px;
+  }
+}
+
+//optimize this code
