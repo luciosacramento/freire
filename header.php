@@ -36,39 +36,42 @@
         <meta name="viewport" content="width=device-width,initial-scale=1"><!-- Place favicon.ico in the root directory -->
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
         <link rel="icon" href="favicon.ico">
-        <link href="https://fonts.googleapis.com/css?family=Poppins:100,300,400,500,700,900" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Caveat" rel="stylesheet">
-        <link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/fontawesome.css">
-        <link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/aos.css">
-        <link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/cookieconsent.min.css">
-        <link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/odometer-theme-minimal.css">
-        <link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/prism-okaidia.css">
-        <link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/simplebar.css">
-        <link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/smart_wizard_all.css">
-        <link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/swiper-bundle.css">
-        <link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/dashcore.css">
-        <link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/rtl.css">
-
+        <link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/dist_flickity.css">
         <!-- Styles -->
         <link rel="stylesheet" href="<?php bloginfo('stylesheet_url'); ?>?<?php echo strtotime(date('Y-m-d h:i:s')); ?>" type="text/css" media="screen" id="color-style"/>
         </head>
 
 <body>
-    <!--[if lt IE 8]>
-<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-<![endif]-->
-    <!-- ./Making stripe menu navigation -->
-    <nav class="st-nav navbar main-nav navigation fixed-top" id="main-nav">
-        <div class="container">
-            <ul class="st-nav-menu nav navbar-nav">
-                <li class="st-nav-section nav-item"><a href="#main" class="navbar-brand"><img src="<?php bloginfo('template_url'); ?>/img/logo.png" alt="Dashcore" class="logo logo-sticky"></a></li>
-                <li class="st-nav-section st-nav-primary stick-right nav-item">
-                    <a class="st-root-link nav-link" href="#features">O IDES</a> 
-                    <a class="st-root-link item-products st-has-dropdown nav-link" data-dropdown="blocks" href="#projects">Projetos</a> 
-                    <a class="st-root-link item-products st-has-dropdown nav-link" data-dropdown="blocks" href="#balanco">Balanços Social</a> 
-                    <a class="st-root-link item-products st-has-dropdown nav-link" data-dropdown="pages" href="#contact">Contato</a> 
-                </li>
+<header class="menu">
+    <div class="logo"><img src="<?php bloginfo('template_url'); ?>/img/logo-cor.png" alt="Freire Tecnologia"></div>
+    <nav class="menu-links">
+        <ul>
+        <li><a href="#">Soluções</a></li>
+        <li><a href="#">Indústrias</a></li>
+        <li class="has-submenu">
+            <a href="#">Freire Tecnologia</a>
+            <ul class="submenu">
+            <li><a href="#">Serviço 1</a></li>
+            <li><a href="#">Serviço 2</a></li>
+            <li><a href="#">Serviço 3</a></li>
             </ul>
-        </div>
+        </li>
+        <li><a href="#">Carreira</a></li>
+        <li><a href="#">Fale Conosco</a></li>
+        </ul>
     </nav>
-    <main class="overflow-hidden">
+    <div class="social">
+        <ul>
+        <li><img src="<?php bloginfo('template_url'); ?>/img/icon_social_instagram.png" alt=""></li>
+        <li><img src="<?php bloginfo('template_url'); ?>/img/icon_social_linkedin.png" alt=""></li>
+        <li><img src="<?php bloginfo('template_url'); ?>/img/icon_celular.png" alt=""> <span>(11) 99992-1996</span> </li>
+        </ul>
+    </div>
+    <div class="toggle">
+        <div class="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</header>
