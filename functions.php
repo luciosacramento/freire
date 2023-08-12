@@ -266,3 +266,45 @@ function update_edit_form() {
 add_action( 'post_edit_form_tag', 'update_edit_form' );
 
 /****************FIM - Post customizado Balanços****************** */
+
+/****************Campos personalizados Page****************** */
+
+// Adicionar um campo personalizado do tipo checkbox à página
+function adicionar_aparece_na_home() {
+    add_meta_box(
+        'aparece_na_home', // ID único da metabox
+        'Checkbox Personalizado', // Título da metabox
+        'mostrar_aparece_na_home', // Função para mostrar o conteúdo da metabox
+        'page', // Tipo de post para o qual a metabox é adicionada (página)
+        'normal', // Localização da metabox (normal, avançado ou lateral)
+        'high' // Prioridade da metabox
+    );
+}
+add_action('add_meta_boxes', 'adicionar_aparece_na_home');
+
+// Função para mostrar o conteúdo da metabox
+function mostrar_aparece_na_home($post) {
+    // Recupere o valor atual do campo personalizado
+    $checkbox_value = get_post_meta($post->ID, 'aparece_na_home', true);
+    
+    // Verifique se o campo está marcado
+    $checked = $checkbox_value == '1' ? 'checked' : '';
+
+    // Renderize o campo checkbox
+    echo '<label>';
+    echo '<input type="checkbox" name="aparece_na_home" value="1" ' . $checked . '>';
+    echo 'Aparece na home?';
+    echo '</label>';
+}
+
+// Salve o valor do campo personalizado quando a página for salva
+function salvar_aparece_na_home($post_id) {
+    if (array_key_exists('aparece_na_home', $_POST)) {
+        update_post_meta($post_id, 'aparece_na_home', '1');
+    } else {
+        delete_post_meta($post_id, 'aparece_na_home');
+    }
+}
+add_action('save_post', 'salvar_aparece_na_home');
+
+  /****************fim Campos personalizados Page****************** */
