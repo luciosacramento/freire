@@ -269,42 +269,92 @@ add_action( 'post_edit_form_tag', 'update_edit_form' );
 
 /****************Campos personalizados Page****************** */
 
-// Adicionar um campo personalizado do tipo checkbox à página
-function adicionar_aparece_na_home() {
-    add_meta_box(
-        'aparece_na_home', // ID único da metabox
-        'Checkbox Personalizado', // Título da metabox
-        'mostrar_aparece_na_home', // Função para mostrar o conteúdo da metabox
-        'page', // Tipo de post para o qual a metabox é adicionada (página)
-        'normal', // Localização da metabox (normal, avançado ou lateral)
-        'high' // Prioridade da metabox
-    );
+// Adicionar campos personalizados às páginas
+function adicionar_campos_personalizados_paginas() {
+  add_meta_box(
+      'campos_pagina',
+      'Detalhes da Página',
+      'exibir_campos_personalizados_pagina',
+      'page', // Tipo de conteúdo: página
+      'normal',
+      'default'
+  );
 }
-add_action('add_meta_boxes', 'adicionar_aparece_na_home');
+add_action( 'add_meta_boxes', 'adicionar_campos_personalizados_paginas' );
 
-// Função para mostrar o conteúdo da metabox
-function mostrar_aparece_na_home($post) {
-    // Recupere o valor atual do campo personalizado
-    $checkbox_value = get_post_meta($post->ID, 'aparece_na_home', true);
-    
-    // Verifique se o campo está marcado
-    $checked = $checkbox_value == '1' ? 'checked' : '';
+// Exibir os campos personalizados nas páginas
+function exibir_campos_personalizados_pagina( $post ) {
+  // Recuperar valores salvos dos campos personalizados
+  $aparece_slide = get_post_meta( $post->ID, 'aparece_slide', true );
+  $imagem_slide = get_post_meta( $post->ID, 'imagem_slide', true );
+  $aparece_chamada = get_post_meta( $post->ID, 'aparece_chamada', true );
+  $subtitulo = get_post_meta( $post->ID, 'subtitulo', true );
 
-    // Renderize o campo checkbox
-    echo '<label>';
-    echo '<input type="checkbox" name="aparece_na_home" value="1" ' . $checked . '>';
-    echo 'Aparece na home?';
-    echo '</label>';
+  // Exibir os campos personalizados no painel de edição
+  ?>
+  <label for="subtitulo">Subtítulo:</label><br>
+  <input type="text" id="subtitulo" name="subtitulo" value="<?php echo esc_attr( $subtitulo ); ?>" />
+  <br><br>
+  <label>
+      <input type="checkbox" name="aparece_slide" value="1" <?php checked( $aparece_slide, '1' ); ?> />
+      Aparece no slide da home
+  </label><br><br>
+  <label for="imagem_slide">Imagem do slide:</label><br>
+  <?php
+  echo wp_nonce_field( 'upload_imagem_slide', 'nonce_upload_imagem_slide' );
+  echo '<input type="text" id="imagem_slide" name="imagem_slide" value="' . esc_attr( $imagem_slide ) . '" size="60" />';
+  echo '<button class="upload-imagem-button button">Selecionar Imagem</button>';
+  ?><br><br>
+  <label>
+      <input type="checkbox" name="aparece_chamada" value="1" <?php checked( $aparece_chamada, '1' ); ?> />
+      Aparece na chamada da home
+  </label><br><br>
+  <script>
+      jQuery(document).ready(function($){
+          // Manipular o botão de upload de imagem
+          $('.upload-imagem-button').click(function(e) {
+              e.preventDefault();
+              var imageUploader = wp.media({
+                  title: 'Escolha uma Imagem',
+                  button: {
+                      text: 'Usar esta Imagem'
+                  },
+                  multiple: false
+              });
+
+              // Quando uma imagem for selecionada, atualizar o campo de texto
+              imageUploader.on('select', function() {
+                  var attachment = imageUploader.state().get('selection').first().toJSON();
+                  $('#imagem_slide').val(attachment.url);
+              });
+
+              // Abrir o seletor de imagens
+              imageUploader.open();
+          });
+      });
+  </script>
+  <?php
 }
 
-// Salve o valor do campo personalizado quando a página for salva
-function salvar_aparece_na_home($post_id) {
-    if (array_key_exists('aparece_na_home', $_POST)) {
-        update_post_meta($post_id, 'aparece_na_home', '1');
-    } else {
-        delete_post_meta($post_id, 'aparece_na_home');
-    }
+// Salvar campos personalizados das páginas
+function salvar_campos_personalizados_pagina( $post_id ) {
+  // Verificar permissões e campos de segurança
+  if ( ! current_user_can( 'edit_post', $post_id ) ) {
+      return;
+  }
+  if ( isset( $_POST['nonce_upload_imagem_slide'] ) && wp_verify_nonce( $_POST['nonce_upload_imagem_slide'], 'upload_imagem_slide' ) ) {
+      if ( isset( $_POST['imagem_slide'] ) ) {
+          update_post_meta( $post_id, 'imagem_slide', sanitize_text_field( $_POST['imagem_slide'] ) );
+      }
+  }
+  // Salvar valores dos campos personalizados
+  update_post_meta( $post_id, 'aparece_slide', sanitize_text_field( $_POST['aparece_slide'] ) );
+  update_post_meta( $post_id, 'aparece_chamada', sanitize_text_field( $_POST['aparece_chamada'] ) );
+  update_post_meta( $post_id, 'subtitulo', sanitize_text_field( $_POST['subtitulo'] ) );
+
 }
-add_action('save_post', 'salvar_aparece_na_home');
+add_action( 'save_post', 'salvar_campos_personalizados_pagina' );
+
 
   /****************fim Campos personalizados Page****************** */
+
