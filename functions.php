@@ -285,16 +285,25 @@ add_action( 'add_meta_boxes', 'adicionar_campos_personalizados_paginas' );
 // Exibir os campos personalizados nas páginas
 function exibir_campos_personalizados_pagina( $post ) {
   // Recuperar valores salvos dos campos personalizados
+  $subtitulo = get_post_meta( $post->ID, 'subtitulo', true );
   $aparece_slide = get_post_meta( $post->ID, 'aparece_slide', true );
   $imagem_slide = get_post_meta( $post->ID, 'imagem_slide', true );
   $aparece_chamada = get_post_meta( $post->ID, 'aparece_chamada', true );
-  $subtitulo = get_post_meta( $post->ID, 'subtitulo', true );
+  $resumo_chamada = get_post_meta( $post->ID, 'resumo_chamada', true );
+  $aparece_projetos = get_post_meta( $post->ID, 'aparece_projetos', true );
+  $imagem_projeto = get_post_meta( $post->ID, 'imagem_projeto', true );
+  $segundo_bloco_visivel = get_post_meta( $post->ID, 'segundo_bloco_visivel', true );
+  $titulo_segundo_bloco = get_post_meta( $post->ID, 'titulo_segundo_bloco', true );
+  $texto_segundo_bloco = get_post_meta( $post->ID, 'texto_segundo_bloco', true );
+  $imagem_segundo_bloco = get_post_meta( $post->ID, 'imagem_segundo_bloco', true );
+
 
   // Exibir os campos personalizados no painel de edição
   ?>
   <label for="subtitulo">Subtítulo:</label><br>
-  <input type="text" id="subtitulo" name="subtitulo" value="<?php echo esc_attr( $subtitulo ); ?>" />
+  <input type="text" id="subtitulo" name="subtitulo" value="<?php echo esc_attr( $subtitulo ); ?>" style="width:100%" />
   <br><br>
+  <hr>
   <label>
       <input type="checkbox" name="aparece_slide" value="1" <?php checked( $aparece_slide, '1' ); ?> />
       Aparece no slide da home
@@ -303,12 +312,15 @@ function exibir_campos_personalizados_pagina( $post ) {
   <?php
   echo wp_nonce_field( 'upload_imagem_slide', 'nonce_upload_imagem_slide' );
   echo '<input type="text" id="imagem_slide" name="imagem_slide" value="' . esc_attr( $imagem_slide ) . '" size="60" />';
-  echo '<button class="upload-imagem-button button">Selecionar Imagem</button>';
-  ?><br><br>
+  echo '<button class="upload-imagem-button button">Selecionar Imagem</button><br><br>';
+  ?>
+  <hr>
   <label>
       <input type="checkbox" name="aparece_chamada" value="1" <?php checked( $aparece_chamada, '1' ); ?> />
       Aparece na chamada da home
   </label><br><br>
+  <label for="resumo_chamada">Resumo da chamada:</label><br>
+  <input type="text" id="resumo_chamada" name="resumo_chamada" value="<?php echo esc_attr( $resumo_chamada ); ?>" style="width:100%"/><br><br>
   <script>
       jQuery(document).ready(function($){
           // Manipular o botão de upload de imagem
@@ -333,7 +345,87 @@ function exibir_campos_personalizados_pagina( $post ) {
           });
       });
   </script>
-  <?php
+  <hr>
+  <label>
+        <input type="checkbox" name="aparece_projetos" value="1" <?php checked( $aparece_projetos, '1' ); ?> />
+        Aparece em Projetos
+    </label><br><br>
+    <label for="imagem_projeto">Imagem do Projeto:</label><br>
+    <?php
+    echo wp_nonce_field( 'upload_imagem_projeto', 'nonce_upload_imagem_projeto' );
+    echo '<input type="text" id="imagem_projeto" name="imagem_projeto" value="' . esc_attr( $imagem_projeto ) . '" size="60" />';
+    echo '<button class="upload-imagem-button-projeto button">Selecionar Imagem</button>';
+    ?>
+    <script>
+        jQuery(document).ready(function($){
+            // Manipular o botão de upload de imagem
+            $('.upload-imagem-button-projeto').click(function(e) {
+                e.preventDefault();
+                var imageUploader = wp.media({
+                    title: 'Escolha uma Imagem',
+                    button: {
+                        text: 'Usar esta Imagem'
+                    },
+                    multiple: false
+                });
+
+                // Quando uma imagem for selecionada, atualizar o campo de texto
+                imageUploader.on('select', function() {
+                    var attachment = imageUploader.state().get('selection').first().toJSON();
+                    //$(this).prev('input[type="text"]').val(attachment.url);
+                    $('#imagem_projeto').val(attachment.url);
+                });
+
+                // Abrir o seletor de imagens
+                imageUploader.open();
+            });
+        });
+    </script><br><br>
+    <hr>
+    <label>
+      <input type="checkbox" name="segundo_bloco_visivel" value="1" <?php checked( $segundo_bloco_visivel, '1' ); ?> />
+      Segundo bloco de texto visível?
+    </label><br><br>
+    <label for="titulo_segundo_bloco">Título do segundo bloco de texto:</label><br>
+    <input type="text" id="titulo_segundo_bloco" name="titulo_segundo_bloco" value="<?php echo esc_attr( $titulo_segundo_bloco ); ?>" /><br>
+    <label for="texto_segundo_bloco">Texto do bloco de texto:</label>
+    <?php
+    wp_editor( $texto_segundo_bloco, 'texto_segundo_bloco', array(
+        'textarea_name' => 'texto_segundo_bloco',
+    ) );
+    ?><br>
+    <label for="imagem_segundo_bloco">Imagem do Segundo Bloco:</label><br>
+    <?php
+    echo wp_nonce_field( 'upload_imagem_segundo_bloco', 'nonce_upload_imagem_segundo_bloco' );
+    echo '<input type="text" id="imagem_segundo_bloco" name="imagem_segundo_bloco" value="' . esc_attr( $imagem_segundo_bloco ) . '" size="60" />';
+    echo '<button class="upload-imagem-button button">Selecionar Imagem</button>';
+    ?>
+    <script>
+        jQuery(document).ready(function($){
+            // Manipular o botão de upload de imagem
+            $('.upload-imagem-button').click(function(e) {
+                e.preventDefault();
+                var imageUploader = wp.media({
+                    title: 'Escolha uma Imagem',
+                    button: {
+                        text: 'Usar esta Imagem'
+                    },
+                    multiple: false
+                });
+
+                // Quando uma imagem for selecionada, atualizar o campo de texto
+                imageUploader.on('select', function() {
+                    var attachment = imageUploader.state().get('selection').first().toJSON();
+                    $('#imagem_segundo_bloco').val(attachment.url);
+                });
+
+                // Abrir o seletor de imagens
+                imageUploader.open();
+            });
+        });
+    </script>
+    <?php
+
 }
 
 // Salvar campos personalizados das páginas
@@ -347,11 +439,27 @@ function salvar_campos_personalizados_pagina( $post_id ) {
           update_post_meta( $post_id, 'imagem_slide', sanitize_text_field( $_POST['imagem_slide'] ) );
       }
   }
+  if ( isset( $_POST['nonce_upload_imagem_projeto'] ) && wp_verify_nonce( $_POST['nonce_upload_imagem_projeto'], 'upload_imagem_projeto' ) ) {
+    if ( isset( $_POST['imagem_projeto'] ) ) {
+        update_post_meta( $post_id, 'imagem_projeto', sanitize_text_field( $_POST['imagem_projeto'] ) );
+    }
+  }
+  if ( isset( $_POST['nonce_upload_imagem_segundo_bloco'] ) && wp_verify_nonce( $_POST['nonce_upload_imagem_segundo_bloco'], 'upload_imagem_segundo_bloco' ) ) {
+    if ( isset( $_POST['imagem_segundo_bloco'] ) ) {
+        update_post_meta( $post_id, 'imagem_segundo_bloco', sanitize_text_field( $_POST['imagem_segundo_bloco'] ) );
+    }
+  }
   // Salvar valores dos campos personalizados
   update_post_meta( $post_id, 'aparece_slide', sanitize_text_field( $_POST['aparece_slide'] ) );
   update_post_meta( $post_id, 'aparece_chamada', sanitize_text_field( $_POST['aparece_chamada'] ) );
+  update_post_meta( $post_id, 'resumo_chamada', sanitize_text_field( $_POST['resumo_chamada'] ) );
   update_post_meta( $post_id, 'subtitulo', sanitize_text_field( $_POST['subtitulo'] ) );
+  update_post_meta( $post_id, 'aparece_projetos', sanitize_text_field( $_POST['aparece_projetos'] ) );
 
+  update_post_meta( $post_id, 'segundo_bloco_visivel', sanitize_text_field( $_POST['segundo_bloco_visivel'] ) );
+  update_post_meta( $post_id, 'titulo_segundo_bloco', sanitize_text_field( $_POST['titulo_segundo_bloco'] ) );
+  update_post_meta( $post_id, 'texto_segundo_bloco', sanitize_text_field( $_POST['texto_segundo_bloco'] ) );
+  
 }
 add_action( 'save_post', 'salvar_campos_personalizados_pagina' );
 
