@@ -297,6 +297,9 @@ function exibir_campos_personalizados_pagina( $post ) {
   $texto_segundo_bloco = get_post_meta( $post->ID, 'texto_segundo_bloco', true );
   $imagem_segundo_bloco = get_post_meta( $post->ID, 'imagem_segundo_bloco', true );
 
+  $pricipais_industrias = get_post_meta( $post->ID, 'pricipais_industrias', true );
+  $aparece_nas_pricipais_industrias = get_post_meta( $post->ID, 'aparece_nas_pricipais_industrias', true );
+
 
   // Exibir os campos personalizados no painel de edição
   ?>
@@ -424,7 +427,18 @@ function exibir_campos_personalizados_pagina( $post ) {
             });
         });
     </script>
+    <hr>
+    <label>
+      <input type="checkbox" name="pricipais_industrias" value="1" <?php checked( $pricipais_industrias, '1' ); ?> />
+      Área com Principais Indústrias?
+    </label><br><br>
+
+    <label>
+      <input type="checkbox" name="aparece_nas_pricipais_industrias" value="1" <?php checked( $aparece_nas_pricipais_industrias, '1' ); ?> />
+      Aparece no destaque das Principais Indústrias?       
+    </label><br><br>
     <?php
+    
 
 }
 
@@ -459,6 +473,8 @@ function salvar_campos_personalizados_pagina( $post_id ) {
   update_post_meta( $post_id, 'segundo_bloco_visivel', sanitize_text_field( $_POST['segundo_bloco_visivel'] ) );
   update_post_meta( $post_id, 'titulo_segundo_bloco', sanitize_text_field( $_POST['titulo_segundo_bloco'] ) );
   update_post_meta( $post_id, 'texto_segundo_bloco', sanitize_text_field( $_POST['texto_segundo_bloco'] ) );
+  update_post_meta( $post_id, 'pricipais_industrias', sanitize_text_field( $_POST['pricipais_industrias'] ) );
+  update_post_meta( $post_id, 'aparece_nas_pricipais_industrias', sanitize_text_field( $_POST['aparece_nas_pricipais_industrias'] ) );
   
 }
 add_action( 'save_post', 'salvar_campos_personalizados_pagina' );
