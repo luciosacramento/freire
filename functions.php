@@ -1,4 +1,11 @@
 <?php
+
+function adicionar_tamanho_imagem_personalizado() {
+    add_image_size( 'imagem-530x353', 530, 353, true ); // Largura, altura, cortar?
+}
+add_action( 'after_setup_theme', 'adicionar_tamanho_imagem_personalizado' );
+
+
 add_action( 'after_setup_theme', 'theme_setup' );
 
 function theme_setup() {
@@ -300,6 +307,14 @@ function exibir_campos_personalizados_pagina( $post ) {
   $pricipais_industrias = get_post_meta( $post->ID, 'pricipais_industrias', true );
   $aparece_nas_pricipais_industrias = get_post_meta( $post->ID, 'aparece_nas_pricipais_industrias', true );
 
+  $terceiro_bloco_visivel = get_post_meta( $post->ID, 'terceiro_bloco_visivel', true );
+  $titulo_terceiro_bloco = get_post_meta( $post->ID, 'titulo_terceiro_bloco', true );
+  $texto_terceiro_bloco = get_post_meta( $post->ID, 'texto_terceiro_bloco', true );
+
+  $solucoes_e_suporte_visivel = get_post_meta( $post->ID, 'solucoes_e_suporte_visivel', true );
+
+  $formulario_de_contato_visivel = get_post_meta( $post->ID, 'formulario_de_contato_visivel', true );
+
 
   // Exibir os campos personalizados no painel de edição
   ?>
@@ -436,7 +451,42 @@ function exibir_campos_personalizados_pagina( $post ) {
     <label>
       <input type="checkbox" name="aparece_nas_pricipais_industrias" value="1" <?php checked( $aparece_nas_pricipais_industrias, '1' ); ?> />
       Aparece no destaque das Principais Indústrias?       
+    </label>
+    <hr>
+    <label>
+      <input type="checkbox" name="terceiro_bloco_visivel" value="1" <?php checked( $terceiro_bloco_visivel, '1' ); ?> />
+      Terceiro bloco de texto visível?
     </label><br><br>
+    <label for="titulo_terceiro_bloco">Título do terceiro bloco de texto:</label><br>
+    <input type="text" id="titulo_terceiro_bloco" name="titulo_terceiro_bloco" value="<?php echo esc_attr( $titulo_terceiro_bloco ); ?>" /><br>
+    <label for="texto_terceiro_bloco">Texto do bloco de texto:</label>
+    <?php
+    wp_editor( $texto_terceiro_bloco, 'texto_terceiro_bloco', array(
+        'textarea_name' => 'texto_terceiro_bloco',
+    ) );
+    ?><br>
+
+    <hr>
+    <label>
+      <input type="checkbox" name="solucoes_e_suporte_visivel" value="1" <?php checked( $solucoes_e_suporte_visivel, '1' ); ?> />
+      Área com Soluções e Suporte visíveis?  
+    <label>
+
+    <hr>
+    <label>
+      <input type="checkbox" name="formulario_de_contato_visivel" value="1" <?php checked( $formulario_de_contato_visivel, '1' ); ?> />
+      Formulário de contato visível?
+    </label>
+        
+    <br><br>
+
+    <style>
+        hr{
+            margin:20px 0;
+            border: 1px solid #727272;
+        }
+    </style>
+
     <?php
     
 
@@ -466,19 +516,93 @@ function salvar_campos_personalizados_pagina( $post_id ) {
   // Salvar valores dos campos personalizados
   update_post_meta( $post_id, 'aparece_slide', sanitize_text_field( $_POST['aparece_slide'] ) );
   update_post_meta( $post_id, 'aparece_chamada', sanitize_text_field( $_POST['aparece_chamada'] ) );
-  update_post_meta( $post_id, 'resumo_chamada', sanitize_text_field( $_POST['resumo_chamada'] ) );
+  update_post_meta( $post_id, 'resumo_chamada', $_POST['resumo_chamada'] ) ;
   update_post_meta( $post_id, 'subtitulo', sanitize_text_field( $_POST['subtitulo'] ) );
   update_post_meta( $post_id, 'aparece_projetos', sanitize_text_field( $_POST['aparece_projetos'] ) );
 
   update_post_meta( $post_id, 'segundo_bloco_visivel', sanitize_text_field( $_POST['segundo_bloco_visivel'] ) );
   update_post_meta( $post_id, 'titulo_segundo_bloco', sanitize_text_field( $_POST['titulo_segundo_bloco'] ) );
-  update_post_meta( $post_id, 'texto_segundo_bloco', sanitize_text_field( $_POST['texto_segundo_bloco'] ) );
+  update_post_meta( $post_id, 'texto_segundo_bloco',  $_POST['texto_segundo_bloco'] ) ;
   update_post_meta( $post_id, 'pricipais_industrias', sanitize_text_field( $_POST['pricipais_industrias'] ) );
   update_post_meta( $post_id, 'aparece_nas_pricipais_industrias', sanitize_text_field( $_POST['aparece_nas_pricipais_industrias'] ) );
   
+  update_post_meta( $post_id, 'terceiro_bloco_visivel', sanitize_text_field( $_POST['terceiro_bloco_visivel'] ) );
+  update_post_meta( $post_id, 'titulo_terceiro_bloco', sanitize_text_field( $_POST['titulo_terceiro_bloco'] ) );
+  update_post_meta( $post_id, 'texto_terceiro_bloco',  $_POST['texto_terceiro_bloco'] ) ;
+
+  update_post_meta( $post_id, 'solucoes_e_suporte_visivel', sanitize_text_field( $_POST['solucoes_e_suporte_visivel'] ) );
+
+  update_post_meta( $post_id, 'formulario_de_contato_visivel', sanitize_text_field( $_POST['formulario_de_contato_visivel'] ) );
+
 }
 add_action( 'save_post', 'salvar_campos_personalizados_pagina' );
 
 
   /****************fim Campos personalizados Page****************** */
+
+  /****************Adicionando campo personalizados em Configurações****************** */
+
+    // Função para exibir os campos personalizados no formulário de configurações
+function exibir_campos_personalizados_configuracao() {
+    ?>
+    <h2>Configurações Personalizadas</h2>
+    <form action="options.php" method="post">
+        <?php settings_fields( 'configuracoes-personalizadas' ); ?>
+        <?php do_settings_sections( 'configuracoes-personalizadas' ); ?>
+        <table class="form-table">
+            <tr valign="top">
+                <th scope="row">Email:</th>
+                <td><input type="text" name="email_field" value="<?php echo esc_attr( get_option( 'email_field' ) ); ?>" /></td>
+            </tr>
+            <tr valign="top">
+                <th scope="row">Telefone:</th>
+                <td><input type="text" name="telefone_field" value="<?php echo esc_attr( get_option( 'telefone_field' ) ); ?>" /></td>
+            </tr>
+            <tr valign="top">
+                <th scope="row">Resumo:</th>
+                <td><textarea name="resumo_field"><?php echo esc_textarea( get_option( 'resumo_field' ) ); ?></textarea></td>
+            </tr>
+            <tr valign="top">
+                <th scope="row">Site Criado Por:</th>
+                <td><textarea name="site_criado_por_field"><?php echo esc_textarea( get_option( 'site_criado_por_field' ) ); ?></textarea></td>
+            </tr>
+        </table>
+        <?php submit_button(); ?>
+    </form>
+    <?php
+}
+
+// Adicionar as configurações personalizadas ao menu
+function adicionar_pagina_configuracoes_personalizadas() {
+    add_options_page( 'Configurações Personalizadas', 'Configurações Personalizadas', 'manage_options', 'configuracoes-personalizadas', 'exibir_campos_personalizados_configuracao' );
+}
+add_action( 'admin_menu', 'adicionar_pagina_configuracoes_personalizadas' );
+
+// Registrar os campos personalizados e seus valores
+function registrar_campos_personalizados() {
+    // Registrar campos para salvar
+    register_setting( 'configuracoes-personalizadas', 'email_field' );
+    register_setting( 'configuracoes-personalizadas', 'telefone_field' );
+    register_setting( 'configuracoes-personalizadas', 'resumo_field' );
+    register_setting( 'configuracoes-personalizadas', 'site_criado_por_field' );
+}
+add_action( 'admin_init', 'registrar_campos_personalizados' );
+
+// Funções para exibir os campos nos formulários
+function exibir_email_field() {
+    echo '<input type="text" name="email_field" value="' . esc_attr( get_option( 'email_field' ) ) . '" />';
+}
+function exibir_telefone_field() {
+    echo '<input type="text" name="telefone_field" value="' . esc_attr( get_option( 'telefone_field' ) ) . '" />';
+}
+function exibir_resumo_field() {
+    echo '<textarea name="resumo_field">' . esc_textarea( get_option( 'resumo_field' ) ) . '</textarea>';
+}
+function exibir_site_criado_por_field() {
+    echo '<textarea name="site_criado_por_field">'.esc_textarea( get_option( 'site_criado_por_field' ) ).'</textarea>';
+}
+
+
+
+  /****************FIM - Adicionando campo personalizados em Configurações****************** */
 

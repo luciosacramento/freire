@@ -1,17 +1,23 @@
 <!--FOOTER-->
+  <?php
+  $email = get_option( 'email_field' );
+  $telefone = get_option( 'telefone_field' );
+  $resumo = get_option( 'resumo_field' );
+  $site_criado_por = get_option( 'site_criado_por_field' );
+?>
 <footer class="box-full verde-gradiente-50">
         <div class="cont_three_column">
           <div class="item">
             <h3><img src="img/logo-branca.png" alt=""></h3>
             <p>
-              A Freire Tecnologia chega ao mercado com o objetivo de inovar no segmento de soluções para gestão pública.
+              <?php echo esc_html( $resumo ); ?>
             </p>
           </div>
           <div class="item">
             <h3>Entre em Contato</h3>
             <p>
-              (11) 99992-1996
-              <span>contato@freiretecnologia.com.br</span>
+              <?php echo esc_html( $telefone ); ?>
+              <span><?php echo esc_html( $email ); ?></span>
             </p>
           </div>
           <hr>
@@ -25,7 +31,7 @@
           </div>
           <div class="item">
             <p>
-              Site criado por <a href="#">Grupo Reúne</a>
+              <?php echo  $site_criado_por ; ?>
             </p>
           </div>
         </div> 
