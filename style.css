@@ -43,6 +43,8 @@ hr {
   background: #F5F5F5;
   border: 0;
   height: 2px;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
 button {
@@ -67,6 +69,8 @@ button {
   display: flex;
   align-items: center;
   padding: 10px;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 .menu .logo {
   font-size: 24px;
@@ -99,8 +103,9 @@ button {
   left: 0;
   background-color: #3274B7;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  width: 100%;
+  width: max-content;
   padding: 0;
+  z-index: 99;
 }
 .menu .menu-links ul li .submenu li {
   margin: 0;
@@ -305,7 +310,7 @@ button {
   font-size: 14px;
   font-family: "Roboto", "Arial", sans-serif;
   font-weight: 300;
-  margin: 0 auto;
+  margin: 7px auto 0 auto;
   text-align: justify;
   display: block;
 }
@@ -508,7 +513,7 @@ button {
 /*interna*/
 .titulo-interna {
   color: #3274B7;
-  background-image: linear-gradient(to right, #fff 0%, #3274B7 50%, #29B552 100%);
+  background-image: linear-gradient(to right, #fff 10%, #3274B7 70%, #29B552 100%);
 }
 .titulo-interna h1 {
   font-family: "Roboto", "Arial", sans-serif;
@@ -524,6 +529,8 @@ button {
   background: url(img/bg_circulos.png);
   background-position: center;
   padding: 40px 0;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
 .texto-foto {

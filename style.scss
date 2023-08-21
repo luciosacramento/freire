@@ -104,6 +104,8 @@ hr{
   background: $corCinzaClaro;
   border: 0;
   height: 2px;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
 button {
@@ -129,6 +131,9 @@ button {
   display: flex;
   align-items: center;
   padding: 10px;
+  max-width: 1440px;
+  margin: 0 auto;
+
   .logo {
     font-size: 24px;
     margin-right: 20px;
@@ -161,8 +166,9 @@ button {
           left: 0;
           background-color: $corLogoAzul;
           box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-          width: 100%;
+          width: max-content;
           padding: 0;
+          z-index: 99;
           
           li {
             margin: 0;
@@ -367,7 +373,7 @@ button {
       p{
         font-size: $font-size-14;
         @include font-options(300);
-        margin: 0 auto;
+        margin: 7px auto 0 auto;
         text-align: justify;
         display: block;
       }
@@ -544,12 +550,14 @@ button {
     }
   }
 
-  background-image: linear-gradient(to right, $corBranco 0%,$corLogoAzul 50%, $corLogoVerde 100%);
+  background-image: linear-gradient(to right, $corBranco 10%,$corLogoAzul 70%, $corLogoVerde 100%);
 
   >div{
     background: url(img/bg_circulos.png);
     background-position: center;
     padding: $padding-cont-cham;
+    max-width: 1440px;
+    margin: 0 auto;
   }
 
 }

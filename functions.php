@@ -297,6 +297,7 @@ function exibir_campos_personalizados_pagina( $post ) {
   $imagem_slide = get_post_meta( $post->ID, 'imagem_slide', true );
   $aparece_chamada = get_post_meta( $post->ID, 'aparece_chamada', true );
   $resumo_chamada = get_post_meta( $post->ID, 'resumo_chamada', true );
+  $imagem_chamada = get_post_meta( $post->ID, 'imagem_chamada', true );
   $aparece_projetos = get_post_meta( $post->ID, 'aparece_projetos', true );
   $imagem_projeto = get_post_meta( $post->ID, 'imagem_projeto', true );
   $segundo_bloco_visivel = get_post_meta( $post->ID, 'segundo_bloco_visivel', true );
@@ -332,13 +333,6 @@ function exibir_campos_personalizados_pagina( $post ) {
   echo '<input type="text" id="imagem_slide" name="imagem_slide" value="' . esc_attr( $imagem_slide ) . '" size="60" />';
   echo '<button class="upload-imagem-button button">Selecionar Imagem</button><br><br>';
   ?>
-  <hr>
-  <label>
-      <input type="checkbox" name="aparece_chamada" value="1" <?php checked( $aparece_chamada, '1' ); ?> />
-      Aparece na chamada da home
-  </label><br><br>
-  <label for="resumo_chamada">Resumo da chamada:</label><br>
-  <input type="text" id="resumo_chamada" name="resumo_chamada" value="<?php echo esc_attr( $resumo_chamada ); ?>" style="width:100%"/><br><br>
   <script>
       jQuery(document).ready(function($){
           // Manipular o botão de upload de imagem
@@ -363,6 +357,44 @@ function exibir_campos_personalizados_pagina( $post ) {
           });
       });
   </script>
+  <hr>
+  <label>
+      <input type="checkbox" name="aparece_chamada" value="1" <?php checked( $aparece_chamada, '1' ); ?> />
+      Aparece na chamada da home
+  </label><br><br>
+  <label for="resumo_chamada">Resumo da chamada:</label><br>
+  <input type="text" id="resumo_chamada" name="resumo_chamada" value="<?php echo esc_attr( $resumo_chamada ); ?>" style="width:100%"/><br><br>
+  <label for="imagem_chamada">Imagem da Chamada:</label><br>
+    <?php
+    echo wp_nonce_field( 'upload_imagem_chamada', 'nonce_upload_imagem_chamada' );
+    echo '<input type="text" id="imagem_chamada" name="imagem_chamada" value="' . esc_attr( $imagem_chamada ) . '" size="60" />';
+    echo '<button class="upload-imagem-button-chamada button">Selecionar Imagem</button>';
+    ?>
+    <script>
+        jQuery(document).ready(function($){
+            // Manipular o botão de upload de imagem
+            $('.upload-imagem-button-chamada').click(function(e) {
+                e.preventDefault();
+                var imageUploader = wp.media({
+                    title: 'Escolha uma Imagem',
+                    button: {
+                        text: 'Usar esta Imagem'
+                    },
+                    multiple: false
+                });
+
+                // Quando uma imagem for selecionada, atualizar o campo de texto
+                imageUploader.on('select', function() {
+                    var attachment = imageUploader.state().get('selection').first().toJSON();
+                    //$(this).prev('input[type="text"]').val(attachment.url);
+                    $('#imagem_chamada').val(attachment.url);
+                });
+
+                // Abrir o seletor de imagens
+                imageUploader.open();
+            });
+        });
+    </script><br><br>
   <hr>
   <label>
         <input type="checkbox" name="aparece_projetos" value="1" <?php checked( $aparece_projetos, '1' ); ?> />
@@ -513,27 +545,71 @@ function salvar_campos_personalizados_pagina( $post_id ) {
         update_post_meta( $post_id, 'imagem_segundo_bloco', sanitize_text_field( $_POST['imagem_segundo_bloco'] ) );
     }
   }
+
+  if ( isset( $_POST['nonce_upload_imagem_chamada'] ) && wp_verify_nonce( $_POST['nonce_upload_imagem_chamada'], 'upload_imagem_chamada' ) ) {
+    if ( isset( $_POST['imagem_chamada'] ) ) {
+        update_post_meta( $post_id, 'imagem_chamada', sanitize_text_field( $_POST['imagem_chamada'] ) );
+    }
+  }
   // Salvar valores dos campos personalizados
-  update_post_meta( $post_id, 'aparece_slide', sanitize_text_field( $_POST['aparece_slide'] ) );
-  update_post_meta( $post_id, 'aparece_chamada', sanitize_text_field( $_POST['aparece_chamada'] ) );
-  update_post_meta( $post_id, 'resumo_chamada', $_POST['resumo_chamada'] ) ;
-  update_post_meta( $post_id, 'subtitulo', sanitize_text_field( $_POST['subtitulo'] ) );
-  update_post_meta( $post_id, 'aparece_projetos', sanitize_text_field( $_POST['aparece_projetos'] ) );
+    if ( isset( $_POST['aparece_slide'] ) ) {
+    update_post_meta( $post_id, 'aparece_slide', sanitize_text_field( $_POST['aparece_slide'] ) );
+    }
+    if ( isset( $_POST['aparece_chamada'] ) ) {
+    update_post_meta( $post_id, 'aparece_chamada', sanitize_text_field( $_POST['aparece_chamada'] ) );
+    }
 
-  update_post_meta( $post_id, 'segundo_bloco_visivel', sanitize_text_field( $_POST['segundo_bloco_visivel'] ) );
-  update_post_meta( $post_id, 'titulo_segundo_bloco', sanitize_text_field( $_POST['titulo_segundo_bloco'] ) );
-  update_post_meta( $post_id, 'texto_segundo_bloco',  $_POST['texto_segundo_bloco'] ) ;
-  update_post_meta( $post_id, 'pricipais_industrias', sanitize_text_field( $_POST['pricipais_industrias'] ) );
-  update_post_meta( $post_id, 'aparece_nas_pricipais_industrias', sanitize_text_field( $_POST['aparece_nas_pricipais_industrias'] ) );
-  
-  update_post_meta( $post_id, 'terceiro_bloco_visivel', sanitize_text_field( $_POST['terceiro_bloco_visivel'] ) );
-  update_post_meta( $post_id, 'titulo_terceiro_bloco', sanitize_text_field( $_POST['titulo_terceiro_bloco'] ) );
-  update_post_meta( $post_id, 'texto_terceiro_bloco',  $_POST['texto_terceiro_bloco'] ) ;
+    if(isset( $_POST['resumo_chamada'] )){ 
+    update_post_meta( $post_id, 'resumo_chamada', $_POST['resumo_chamada'] ) ;
+    }
 
-  update_post_meta( $post_id, 'solucoes_e_suporte_visivel', sanitize_text_field( $_POST['solucoes_e_suporte_visivel'] ) );
+    if ( isset( $_POST['subtitulo'] ) ) {
+    update_post_meta( $post_id, 'subtitulo', sanitize_text_field( $_POST['subtitulo'] ) );
+    }
 
-  update_post_meta( $post_id, 'formulario_de_contato_visivel', sanitize_text_field( $_POST['formulario_de_contato_visivel'] ) );
+    if ( isset( $_POST['aparece_projetos'] ) ) {
+    update_post_meta( $post_id, 'aparece_projetos', sanitize_text_field( $_POST['aparece_projetos'] ) );
+    }
 
+    if ( isset( $_POST['segundo_bloco_visivel'] ) ) {
+    update_post_meta( $post_id, 'segundo_bloco_visivel', sanitize_text_field( $_POST['segundo_bloco_visivel'] ) );
+    }
+
+    if ( isset( $_POST['titulo_segundo_bloco'] ) ) {
+    update_post_meta( $post_id, 'titulo_segundo_bloco', sanitize_text_field( $_POST['titulo_segundo_bloco'] ) );
+    }
+
+    if(isset( $_POST['texto_segundo_bloco'] )){ 
+    update_post_meta( $post_id, 'texto_segundo_bloco', $_POST['texto_segundo_bloco'] ) ;
+    }
+
+    if ( isset( $_POST['pricipais_industrias'] ) ) {
+    update_post_meta( $post_id, 'pricipais_industrias', sanitize_text_field( $_POST['pricipais_industrias'] ) );
+    }
+
+    if(isset( $_POST['aparece_nas_pricipais_industrias'] )){ 
+    update_post_meta( $post_id, 'aparece_nas_pricipais_industrias', sanitize_text_field( $_POST['aparece_nas_pricipais_industrias'] ) ) ;
+    }   
+
+    if ( isset( $_POST['terceiro_bloco_visivel'] ) ) {
+    update_post_meta( $post_id, 'terceiro_bloco_visivel', sanitize_text_field( $_POST['terceiro_bloco_visivel'] ) );
+    }
+
+    if ( isset( $_POST['titulo_terceiro_bloco'] ) ) {
+    update_post_meta( $post_id, 'titulo_terceiro_bloco', sanitize_text_field( $_POST['titulo_terceiro_bloco'] ) );
+    }
+
+    if(isset( $_POST['texto_terceiro_bloco'] )){ 
+    update_post_meta( $post_id, 'texto_terceiro_bloco', $_POST['texto_terceiro_bloco'] ) ;
+    }
+
+    if ( isset( $_POST['solucoes_e_suporte_visivel'] ) ) {
+    update_post_meta( $post_id, 'solucoes_e_suporte_visivel', sanitize_text_field( $_POST['solucoes_e_suporte_visivel'] ) );
+    }
+
+    if ( isset( $_POST['formulario_de_contato_visivel'] ) ){
+    update_post_meta( $post_id, 'formulario_de_contato_visivel', sanitize_text_field( $_POST['formulario_de_contato_visivel'] ) );
+    }
 }
 add_action( 'save_post', 'salvar_campos_personalizados_pagina' );
 
@@ -602,7 +678,31 @@ function exibir_site_criado_por_field() {
     echo '<textarea name="site_criado_por_field">'.esc_textarea( get_option( 'site_criado_por_field' ) ).'</textarea>';
 }
 
-
-
   /****************FIM - Adicionando campo personalizados em Configurações****************** */
 
+// Registrar a localização do menu personalizado
+function registrar_menu_personalizado() {
+    register_nav_menu('header', __('header'));
+}
+add_action('init', 'registrar_menu_personalizado');
+
+// Walker personalizado para formatar o menu
+class Walker_Nav_Menu_Custom extends Walker_Nav_Menu {
+    function start_lvl(&$output, $depth = 0, $args = null) {
+        $output .= '<ul class="submenu">';
+    }
+
+    function start_el(&$output, $item, $depth = 0, $args = null, $id = 0) {
+        $classes = empty($item->classes) ? array() : (array) $item->classes;
+        $output .= '<li' . (in_array('menu-item-has-children', $classes) ? ' class="has-submenu"' : '') . '>';
+        $output .= '<a href="' . $item->url . '">' . $item->title . '</a>';
+    }
+
+    function end_el(&$output, $item, $depth = 0, $args = null) {
+        $output .= '</li>';
+    }
+
+    function end_lvl(&$output, $depth = 0, $args = null) {
+        $output .= '</ul>';
+    }
+}

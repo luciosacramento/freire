@@ -30,45 +30,42 @@ get_header();
       <!--SERVICOS-->
       <div class="box-full verde">
         <div id="chams_servicos" class="cont_four_column">
-          <div class="item">
-            <img src="<?php bloginfo('template_url'); ?>/img/icon_fabrica_software.png" alt="">
-            <h3>Fábrica de Software
-            <p>
-              Soluções personalizadas para gestão pública com qualidade e eficiência
-            </p>
-          </h3>
-          </div>
-          <div class="item">
-            <img src="<?php bloginfo('template_url'); ?>/img/icon_fabrica_software.png" alt="">
-            <h3>Fábrica de Software
-            <p>
-              Soluções personalizadas para gestão pública com qualidade e eficiência
-            </p>
-          </h3>
-          </div>
-          <div class="item">
-            <img src="<?php bloginfo('template_url'); ?>/img/icon_fabrica_software.png" alt="">
-            <h3>Fábrica de Software
-            <p>
-              Soluções personalizadas para gestão pública com qualidade e eficiência
-            </p>
-          </h3>
-          </div>
-          <div class="item">
-            <img src="<?php bloginfo('template_url'); ?>/img/icon_fabrica_software.png" alt="">
-            <h3>Fábrica de Software
-            <p>
-              Soluções personalizadas para gestão pública com qualidade e eficiência
-            </p>
-          </h3>
-          </div>
+
+        <?php
+          $args = array(
+              'post_type' => 'page', // Tipo de postagem para páginas
+              'meta_key' => 'aparece_chamada', // Nome do campo personalizado
+              'meta_value' => '1', // Valor desejado
+          );
+
+          $pages_query = new WP_Query($args);
+
+          if ($pages_query->have_posts()) :
+              while ($pages_query->have_posts()) : $pages_query->the_post();
+                 ?>
+                  <div class="item">
+                    <img src="<?php  echo get_post_meta( get_the_ID(), 'imagem_chamada', true ); ?>" alt="">
+                    <h3><?php the_title(); ?>
+                    <p>
+                      <?php echo get_post_meta( get_the_ID(), 'resumo_chamada', true ); ?>
+                    </p>
+                  </h3>
+                  </div>
+                <?php
+              endwhile;
+              wp_reset_postdata(); // Restaura os dados originais do post
+          else :
+              // Caso não haja páginas encontradas com o campo personalizado
+              echo 'Nenhuma página encontrada.';
+          endif;
+          ?>
         </div>
       </div>
       <!--FIM SERVICOS-->
       <!--QUEM SOMOS-->
       <div id="cham_quemsomos" class="cont_three_column">
 
-        <h2>Que Somos</h2>
+        <h2>Quem Somos</h2>
         <p>A Freire tecnologia tem o objetivo de inovar no segmento de soluções para gestão pública.</p>
 
         <div class="item">

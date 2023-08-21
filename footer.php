@@ -16,7 +16,7 @@
           <div class="item">
             <h3>Entre em Contato</h3>
             <p>
-              <?php echo esc_html( $telefone ); ?>
+              <?php echo esc_html( $telefone ); ?><br>
               <span><?php echo esc_html( $email ); ?></span>
             </p>
           </div>
@@ -38,7 +38,7 @@
       </footer>
       <!--FIM FOOTER-->
 
-
+<?php wp_footer(); ?>
 </body>
 <script src="<?php bloginfo('template_url'); ?>/js/flickity.pkgd.min.js"></script>
 <script src="<?php bloginfo('template_url'); ?>/js/functions.js"></script>
