@@ -18,7 +18,7 @@ function add_support_to_pages() {
 
 add_theme_support( 'post-thumbnails' );
 
-/****************Post customizado PROJETOS****************** */
+/****************Post customizado PROJETOS****************** *
 
 function registrar_projetos() {
     $labels = array(
@@ -131,7 +131,7 @@ function exibir_campos_personalizados( $post ) {
     <?php
 }
 
-/* When the post is saved, saves our custom data */
+/* When the post is saved, saves our custom data *
 function myplugin_save_postdata( $post_id ) {
 
     // verify if this is an auto save routine. 
@@ -171,7 +171,7 @@ function myplugin_save_postdata( $post_id ) {
 
   /****************FIM - Post customizado PROJETOS****************** */
 
-  /****************Post customizado Balanços****************** */
+  /****************Post customizado Balanços****************** *
 
   function registrar_balanco() {
     $labels = array(
@@ -226,7 +226,7 @@ add_action('save_post', 'save_custom_meta_data');
 
 /**
  * Custom attachment metabox markup.
- */
+ *
 function wp_custom_attachment() {
 	wp_nonce_field( plugin_basename(__FILE__), 'wp_custom_attachment_nonce' );
 	$html = '<label>Arquivo:</label><br>';
@@ -266,7 +266,7 @@ add_action( 'save_post', 'save_custom_meta_data' );
 
 /**
  * Add functionality for file upload.
- */
+ *
 function update_edit_form() {
 	echo ' enctype="multipart/form-data"';
 }
