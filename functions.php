@@ -316,6 +316,9 @@ function exibir_campos_personalizados_pagina( $post ) {
 
   $formulario_de_contato_visivel = get_post_meta( $post->ID, 'formulario_de_contato_visivel', true );
 
+  $aparece_ajuda = get_post_meta( $post->ID, 'aparece_ajuda', true );
+  $imagem_ajuda = get_post_meta( $post->ID, 'imagem_ajuda', true );
+
 
   // Exibir os campos personalizados no painel de edição
   ?>
@@ -432,6 +435,42 @@ function exibir_campos_personalizados_pagina( $post ) {
         });
     </script><br><br>
     <hr>
+  <label>
+        <input type="checkbox" name="aparece_ajuda" value="1" <?php checked( $aparece_ajuda, '1' ); ?> />
+        Aparece em Ajuda
+    </label><br><br>
+    <label for="imagem_ajuda">Imagem da chamada de ajuda:</label><br>
+    <?php
+    echo wp_nonce_field( 'upload_imagem_ajuda', 'nonce_upload_imagem_ajuda' );
+    echo '<input type="text" id="imagem_ajuda" name="imagem_ajuda" value="' . esc_attr( $imagem_ajuda ) . '" size="60" />';
+    echo '<button class="upload-imagem-button-ajuda button">Selecionar Imagem</button>';
+    ?>
+    <script>
+        jQuery(document).ready(function($){
+            // Manipular o botão de upload de imagem
+            $('.upload-imagem-button-ajuda').click(function(e) {
+                e.preventDefault();
+                var imageUploader = wp.media({
+                    title: 'Escolha uma Imagem',
+                    button: {
+                        text: 'Usar esta Imagem'
+                    },
+                    multiple: false
+                });
+
+                // Quando uma imagem for selecionada, atualizar o campo de texto
+                imageUploader.on('select', function() {
+                    var attachment = imageUploader.state().get('selection').first().toJSON();
+                    //$(this).prev('input[type="text"]').val(attachment.url);
+                    $('#imagem_ajuda').val(attachment.url);
+                });
+
+                // Abrir o seletor de imagens
+                imageUploader.open();
+            });
+        });
+    </script><br><br>
+    <hr>
     <label>
       <input type="checkbox" name="segundo_bloco_visivel" value="1" <?php checked( $segundo_bloco_visivel, '1' ); ?> />
       Segundo bloco de texto visível?
@@ -540,6 +579,11 @@ function salvar_campos_personalizados_pagina( $post_id ) {
         update_post_meta( $post_id, 'imagem_projeto', sanitize_text_field( $_POST['imagem_projeto'] ) );
     }
   }
+  if ( isset( $_POST['nonce_upload_imagem_ajuda'] ) && wp_verify_nonce( $_POST['nonce_upload_imagem_ajuda'], 'upload_imagem_ajuda' ) ) {
+    if ( isset( $_POST['imagem_ajuda'] ) ) {
+        update_post_meta( $post_id, 'imagem_ajuda', sanitize_text_field( $_POST['imagem_ajuda'] ) );
+    }
+  }
   if ( isset( $_POST['nonce_upload_imagem_segundo_bloco'] ) && wp_verify_nonce( $_POST['nonce_upload_imagem_segundo_bloco'], 'upload_imagem_segundo_bloco' ) ) {
     if ( isset( $_POST['imagem_segundo_bloco'] ) ) {
         update_post_meta( $post_id, 'imagem_segundo_bloco', sanitize_text_field( $_POST['imagem_segundo_bloco'] ) );
@@ -570,6 +614,10 @@ function salvar_campos_personalizados_pagina( $post_id ) {
     if ( isset( $_POST['aparece_projetos'] ) ) {
     update_post_meta( $post_id, 'aparece_projetos', sanitize_text_field( $_POST['aparece_projetos'] ) );
     }
+
+    if ( isset( $_POST['aparece_ajuda'] ) ) {
+        update_post_meta( $post_id, 'aparece_ajuda', sanitize_text_field( $_POST['aparece_ajuda'] ) );
+        }
 
     if ( isset( $_POST['segundo_bloco_visivel'] ) ) {
     update_post_meta( $post_id, 'segundo_bloco_visivel', sanitize_text_field( $_POST['segundo_bloco_visivel'] ) );
@@ -642,6 +690,30 @@ function exibir_campos_personalizados_configuracao() {
                 <th scope="row">Site Criado Por:</th>
                 <td><textarea name="site_criado_por_field"><?php echo esc_textarea( get_option( 'site_criado_por_field' ) ); ?></textarea></td>
             </tr>
+            <tr valign="top">
+                <th scope="row">Softwares Instalados:</th>
+                <td><input type="text" name="software_field" value="<?php echo esc_attr( get_option( 'software_field' ) ); ?>" /></td>
+            </tr>
+            <tr valign="top">
+                <th scope="row">Vidas de servidores públicos geridas por nossas soluções:</th>
+                <td><input type="text" name="vidas_servidores_field" value="<?php echo esc_attr( get_option( 'vidas_servidores_field' ) ); ?>" /></td>
+            </tr>
+            <tr valign="top">
+                <th scope="row">Milhões de Usuários:</th>
+                <td><input type="text" name="usuarios_field" value="<?php echo esc_attr( get_option( 'usuarios_field' ) ); ?>" /></td>
+            </tr>
+            <tr valign="top">
+                <th scope="row">Propósito:</th>
+                <td><input type="text" name="proposito_field" value="<?php echo esc_attr( get_option( 'proposito_field' ) ); ?>" /></td>
+            </tr>
+            <tr valign="top">
+                <th scope="row">Missão:</th>
+                <td><input type="text" name="missao_field" value="<?php echo esc_attr( get_option( 'missao_field' ) ); ?>" /></td>
+            </tr>
+            <tr valign="top">
+                <th scope="row">Visão:</th>
+                <td><input type="text" name="visao_field" value="<?php echo esc_attr( get_option( 'visao_field' ) ); ?>" /></td>
+            </tr>
         </table>
         <?php submit_button(); ?>
     </form>
@@ -661,6 +733,12 @@ function registrar_campos_personalizados() {
     register_setting( 'configuracoes-personalizadas', 'telefone_field' );
     register_setting( 'configuracoes-personalizadas', 'resumo_field' );
     register_setting( 'configuracoes-personalizadas', 'site_criado_por_field' );
+    register_setting( 'configuracoes-personalizadas', 'software_field' );
+    register_setting( 'configuracoes-personalizadas', 'vidas_servidores_field' );
+    register_setting( 'configuracoes-personalizadas', 'usuarios_field' );
+    register_setting( 'configuracoes-personalizadas', 'proposito_field' );
+    register_setting( 'configuracoes-personalizadas', 'missao_field' );
+    register_setting( 'configuracoes-personalizadas', 'visao_field' );
 }
 add_action( 'admin_init', 'registrar_campos_personalizados' );
 
@@ -676,6 +754,24 @@ function exibir_resumo_field() {
 }
 function exibir_site_criado_por_field() {
     echo '<textarea name="site_criado_por_field">'.esc_textarea( get_option( 'site_criado_por_field' ) ).'</textarea>';
+}
+function exibir_software_field() {
+    echo '<input type="text" name="software_field" value="' . esc_attr( get_option( 'software_field' ) ) . '" />';
+}
+function exibir_vidas_servidores_field() {
+    echo '<input type="text" name="vidas_servidores_field" value="' . esc_attr( get_option( 'vidas_servidores_field' ) ) . '" />';
+}
+function exibir_usuarios_field() {
+    echo '<input type="text" name="usuarios_field" value="' . esc_attr( get_option( 'usuarios_field' ) ) . '" />';
+}
+function exibir_proposito_field() {
+    echo '<input type="text" name="proposito_field" value="' . esc_attr( get_option( 'proposito_field' ) ) . '" />';
+}
+function exibir_missao_field() {
+    echo '<input type="text" name="missao_field" value="' . esc_attr( get_option( 'missao_field' ) ) . '" />';
+}
+function exibir_visao_field() {
+    echo '<input type="text" name="visao_field" value="' . esc_attr( get_option( 'visao_field' ) ) . '" />';
 }
 
   /****************FIM - Adicionando campo personalizados em Configurações****************** */
