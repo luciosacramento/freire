@@ -8,7 +8,7 @@
 <footer class="box-full verde-gradiente-50">
         <div class="cont_three_column">
           <div class="item">
-            <h3><img src="img/logo-branca.png" alt=""></h3>
+            <h3><img src="<?php bloginfo('template_url'); ?>/img/logo-branca.png" alt=""></h3>
             <p>
               <?php echo esc_html( $resumo ); ?>
             </p>

@@ -69,7 +69,6 @@ $box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
 // Estilos gerais
 html {
   color: $corCinzaAzulado;
-  line-height: 20px;
 }
 h4{
   font-size: $font-size-24;
@@ -451,7 +450,7 @@ button {
         text-transform: lowercase;
       }
     
-      p{
+      div{
         text-transform: none;
         font-size: $font-size-14;
         @include font-options(700);

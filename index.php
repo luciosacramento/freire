@@ -44,10 +44,10 @@ get_header();
               while ($pages_query->have_posts()) : $pages_query->the_post();
                  ?>
                   <div class="item">
-                    <img src="<?php  echo get_post_meta( get_the_ID(), 'imagem_chamada', true ); ?>" alt="">
+                    <img src="<?php  echo get_custom_meta( get_the_ID(), 'imagem_chamada', true ); ?>" alt="">
                     <h3><?php the_title(); ?>
                     <p>
-                      <?php echo get_post_meta( get_the_ID(), 'resumo_chamada', true ); ?>
+                      <?php echo get_custom_meta( get_the_ID(), 'resumo_chamada', true ); ?>
                     </p>
                   </h3>
                   </div>
@@ -72,7 +72,7 @@ get_header();
           <img src="<?php bloginfo('template_url'); ?>/img/icon_proposito.png" alt="">
           <h3>Propósito
           <p>
-            Soluções personalizadas para gestão pública com qualidade e eficiência
+            <?php echo get_option( 'proposito_field' ); ?>
           </p>
         </h3>
         </div>
@@ -80,7 +80,7 @@ get_header();
           <img src="<?php bloginfo('template_url'); ?>/img/icon_missao.png" alt="">
           <h3>Missão
           <p>
-            Soluções personalizadas para gestão pública com qualidade e eficiência
+          <?php echo get_option( 'missao_field' ); ?>
           </p>
         </h3>
         </div>
@@ -88,7 +88,7 @@ get_header();
           <img src="<?php bloginfo('template_url'); ?>/img/icon_visao.png" alt="">
           <h3>visão
           <p>
-            Soluções personalizadas para gestão pública com qualidade e eficiência
+          <?php echo get_option( 'visao_field' ); ?>
           </p>
         </h3>
         </div>
@@ -101,24 +101,28 @@ get_header();
          <p class="subtitle">Temos clientes de vários Estados do país oferecendo sistemas inteligentes para uma gestão pública mais eficiente, transparente e inovadora.</p>
          <div id="cham_nossa_presenca" class="cont_three_column">
           <div class="item">
-            <h3>5<span>K</span>
-            <p>
+            <h3><?php 
+
+            echo separeLetterNumber(get_option( 'software_field' )); 
+            
+            ?>
+            <div>
               Softwares Instalados
-            </p>
+            </div>
           </h3>
           </div>
           <div class="item">
-            <h3>52<span>mil</span>
-            <p>
+            <h3><?php  echo separeLetterNumber(get_option( 'vidas_servidores_field' ));  ?>
+            <div>
               Vidas de servidores públicos geridas por nossas soluções
-            </p>
+            </div>
           </h3>
           </div>
           <div class="item">
-            <h3>9<span>m</span>
-            <p>
+            <h3><?php  echo separeLetterNumber(get_option( 'usuarios_field' ));  ?>
+            <div>
               Milhões de Usuários
-            </p>
+            </div>
           </h3>
           </div>
           <hr>
@@ -146,46 +150,42 @@ get_header();
         <h2 class="title">Como Podemos Ajudar</h2>
         <p class="subtitle">Melhores soluções para transformar sua jornada digital</p>
         <div id="cham_ajuda" class="cont_five_column">
-          <div class="item">
-            <img src="<?php bloginfo('template_url'); ?>/img/icon_siafic.png" alt="">
-            <h3>Sistema SIAFIC
-            <p>
-              Organização, prazos e conformidade com a legislação para gestores públicos
-            </p>
-          </h3>
-          </div>
-          <div class="item">
-            <img src="<?php bloginfo('template_url'); ?>/img/icon_siafic.png" alt="">
-            <h3>Sistema SIAFIC
-            <p>
-              Organização, prazos e conformidade com a legislação para gestores públicos
-            </p>
-          </h3>
-          </div>
-          <div class="item">
-            <img src="<?php bloginfo('template_url'); ?>/img/icon_siafic.png" alt="">
-            <h3>Sistema SIAFIC
-            <p>
-              Organização, prazos e conformidade com a legislação para gestores públicos
-            </p>
-          </h3>
-          </div>
-          <div class="item">
-            <img src="<?php bloginfo('template_url'); ?>/img/icon_siafic.png" alt="">
-            <h3>Sistema SIAFIC
-            <p>
-              Organização, prazos e conformidade com a legislação para gestores públicos
-            </p>
-          </h3>
-          </div>
-          <div class="item">
-            <img src="<?php bloginfo('template_url'); ?>/img/icon_siafic.png" alt="">
-            <h3>Sistema SIAFIC
-            <p>
-              Organização, prazos e conformidade com a legislação para gestores públicos
-            </p>
-          </h3>
-          </div>
+
+        <?php
+                    $args = array(
+                        'post_type' => 'page', 
+                        'posts_per_page' => -1, 
+                        'meta_key' => 'aparece_ajuda',
+                        'meta_value' => '1'
+                    );
+                    
+                    $pages_query = new WP_Query( $args );
+                    
+                    if ( $pages_query->have_posts() ) {
+
+                        while ( $pages_query->have_posts() ) {
+                            $pages_query->the_post();
+                                                  
+                        ?>
+                        <div class="item">
+                          <img src="<?php echo get_custom_meta( get_the_ID(), 'imagem_ajuda', true ); ?>" alt="<?php the_title(); ?>">
+                          <h3><?php the_title(); ?>
+                            <p>
+                                <?php the_excerpt(); ?>
+                            </p>
+                          </h3>
+                        </div>
+
+                        <?php
+
+                        }
+                        
+
+                    } else {
+                        echo 'Nenhuma página encontrada.';
+                    }
+                    wp_reset_postdata(); 
+            ?>
         </div>
       </div>
       <!--FIM COMO PODEMOS AJUDAR-->
@@ -195,97 +195,49 @@ get_header();
         <p class="subtitle">Conheça alguns de nossos projetos.</p>
 
         <div id="projetos-carousel" data-flickity='{ "groupCells": true,"wrapAround": true }'>
-          <div class="carousel-cell">
 
-          <a href="#">
-            <div>
-              <img src="<?php bloginfo('template_url'); ?>/img/img_projeto.jpg" alt="">
-              <h3>Sistema SIAFIC
-              <p>
-                Organização, prazos e conformidade com a legislação para gestores públicos
-              </p>
-            </h3>
-            </div>
-          </a>
-          </div>
-          <div class="carousel-cell">
+          
+        <?php
+                    $args = array(
+                        'post_type' => 'page', 
+                        'posts_per_page' => -1, 
+                        'meta_key' => 'aparece_projetos',
+                        'meta_value' => '1'
+                    );
+                    
+                    $pages_query = new WP_Query( $args );
+                    
+                    if ( $pages_query->have_posts() ) {
 
-            <a href="#">
-              <div>
-                <img src="<?php bloginfo('template_url'); ?>/img/img_projeto.jpg" alt="">
-                <h3>Sistema SIAFIC
-                <p>
-                  Organização, prazos e conformidade com a legislação para gestores públicos
-                </p>
-              </h3>
-              </div>
-            </a>
-          </div>
-          <div class="carousel-cell">
-            <a href="#">
-              <div>
-                <img src="<?php bloginfo('template_url'); ?>/img/img_projeto.jpg" alt="">
-                <h3>Sistema SIAFIC
-                <p>
-                  Organização, prazos e conformidade com a legislação para gestores públicos
-                </p>
-              </h3>
-              </div>
-            </a>
-          </div>
-          <div class="carousel-cell">
+                        while ( $pages_query->have_posts() ) {
+                            $pages_query->the_post();
+                                                  
+                        ?>
+                        <div class="carousel-cell">
+                        <a href="<?php echo get_the_permalink(); ?>">
+                          <div>
+                            <img src="<?php echo get_custom_meta( get_the_ID(), 'imagem_projeto', true ); ?>" alt="<?php the_title(); ?>">
+                            <h3><?php the_title(); ?>
+                            <p>
+                              <?php the_excerpt(); ?>
+                            </p>
+                          </h3>
+                          </div>
+                        </a>
+                        </div>
 
-            <a href="#">
-              <div>
-                <img src="<?php bloginfo('template_url'); ?>/img/img_projeto.jpg" alt="">
-                <h3>Sistema SIAFIC
-                <p>
-                  Organização, prazos e conformidade com a legislação para gestores públicos
-                </p>
-              </h3>
-              </div>
-            </a>
+                        <?php
 
-          </div>
-          <div class="carousel-cell">
-            <a href="#">
-              <div>
-                <img src="<?php bloginfo('template_url'); ?>/img/img_projeto.jpg" alt="">
-                <h3>Sistema SIAFIC
-                <p>
-                  Organização, prazos e conformidade com a legislação para gestores públicos
-                </p>
-              </h3>
-              </div>
-            </a>
+                        }
+                        
 
-          </div>
-          <div class="carousel-cell">
-            <a href="#">
-              <div>
-                <img src="<?php bloginfo('template_url'); ?>/img/img_projeto.jpg" alt="">
-                <h3>Sistema SIAFIC
-                <p>
-                  Organização, prazos e conformidade com a legislação para gestores públicos
-                </p>
-              </h3>
-              </div>
-            </a>
+                    } else {
+                        echo 'Nenhuma página encontrada.';
+                    }
+                    wp_reset_postdata(); 
+            ?>          
 
-          </div>
-          <div class="carousel-cell">
-            <a href="#">
-              <div>
-                <img src="<?php bloginfo('template_url'); ?>/img/img_projeto.jpg" alt="">
-                <h3>Sistema SIAFIC
-                <p>
-                  Organização, prazos e conformidade com a legislação para gestores públicos
-                </p>
-              </h3>
-              </div>
-            </a>
-
-          </div>
+          
 
         </div>
 

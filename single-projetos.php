@@ -30,13 +30,13 @@ get_header();
                             <p class="text-darker bold mt-0 d-flex">Objeto da Parceria: </p>
                             <div class="row no-gutters " style="text-align: justify;">
                                 <?php 
-                                    echo get_post_meta($post->ID, 'objeto', TRUE);
+                                    echo get_custom_meta($post->ID, 'objeto', TRUE);
                                 ?>
 
                                 <p class="text-darker bold mt-0 d-flex">Resultados: </p>
                                 <p>
                                 <?php 
-                                    echo get_post_meta($post->ID, 'resultados', TRUE);
+                                    echo get_custom_meta($post->ID, 'resultados', TRUE);
                                 ?>
                                 </p>
                                 
@@ -46,31 +46,31 @@ get_header();
                     <div class="col-xl-6 col-lg-6">
                         <div class="shadow-box shadow-hover bg-contrast p-3 rounded h-100">
                             <div class="mt-3  text-center text-md-start">
-                                <span class="bold text-dark">CONTRATO DE CONCESSÃO DE COLABORAÇÃO FINANCEIRA Nº:</span> <?php  echo get_post_meta($post->ID, 'contrato', TRUE);?>
+                                <span class="bold text-dark">CONTRATO DE CONCESSÃO DE COLABORAÇÃO FINANCEIRA Nº:</span> <?php  echo get_custom_meta($post->ID, 'contrato', TRUE);?>
                             </div>
                             <div class="mt-3 text-center text-md-start">
-                                <span class="bold text-dark">Data da assinatura:</span> <?php  echo get_post_meta($post->ID, 'data', TRUE);?>
+                                <span class="bold text-dark">Data da assinatura:</span> <?php  echo get_custom_meta($post->ID, 'data', TRUE);?>
                             </div>
                             <div class="mt-3 text-center text-md-start">
-                                <span class="bold text-dark">Valor Total do Contrato:</span> <?php  echo get_post_meta($post->ID, 'valor', TRUE);?>
+                                <span class="bold text-dark">Valor Total do Contrato:</span> <?php  echo get_custom_meta($post->ID, 'valor', TRUE);?>
                             </div>
 
                             <div class="rounded bg-info shadow  p-4 mt-3 text-contrast">
                                 <p class="bold mb-3 mt-0 block text-center">Assinado entre:</p>
 
                                 <div class="mb-3 text-center  text-md-start">
-                                     <?php  echo get_post_meta($post->ID, 'assinante1', TRUE);?>
+                                     <?php  echo get_custom_meta($post->ID, 'assinante1', TRUE);?>
                                 </div>
                                 <div class="mb-3 text-center text-md-start">
-                                    <span class="bold ">CNPJ:</span> <?php  echo get_post_meta($post->ID, 'cnpjassinante1', TRUE);?>
+                                    <span class="bold ">CNPJ:</span> <?php  echo get_custom_meta($post->ID, 'cnpjassinante1', TRUE);?>
                                 </div>
                                 <hr>
                                 <div class="mb-3 text-center text-md-start">
-                                <?php  echo get_post_meta($post->ID, 'assinante2', TRUE);?>
+                                <?php  echo get_custom_meta($post->ID, 'assinante2', TRUE);?>
                                 </div>
     
                                 <div class="mb-3 text-center text-md-start">
-                                    <span class="bold ">CNPJ:</span> <?php  echo get_post_meta($post->ID, 'cnpjassinante2', TRUE);?>
+                                    <span class="bold ">CNPJ:</span> <?php  echo get_custom_meta($post->ID, 'cnpjassinante2', TRUE);?>
                                 </div>
                             </div>
                             

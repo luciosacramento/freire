@@ -802,3 +802,13 @@ class Walker_Nav_Menu_Custom extends Walker_Nav_Menu {
         $output .= '</ul>';
     }
 }
+
+function separeLetterNumber($words){
+    return preg_replace("/[^0-9]/", "", $words ) . "<span>".preg_replace('/\d+/u', '', $words)."</span>";
+}
+
+function get_custom_meta($post_id, $key, $single = true):string {
+    $value = get_post_meta($post_id, $key, $single);
+    $value = str_replace("http://localhost/freire", get_home_url(), $value);
+    return $value;
+}

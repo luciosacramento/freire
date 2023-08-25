@@ -37,25 +37,25 @@
                 </div>
             <?php } ?>
             <div class="texto">
-                <h4><?php echo get_post_meta( get_the_ID(), 'subtitulo', true ); ?></h4>
+                <h4><?php echo get_custom_meta( get_the_ID(), 'subtitulo', true ); ?></h4>
                 <?php the_content(); ?>
             </div>
         </div>
         <!--FIM CONTEUDO FOTO E TEXTO-->
 
         <!--SEGUNDO CONTEUDO FOTO E TEXTO-->
-        <?php if (get_post_meta( get_the_ID(), 'segundo_bloco_visivel', true ) == 1){ ?>
+        <?php if (get_custom_meta( get_the_ID(), 'segundo_bloco_visivel', true ) == 1){ ?>
 
           <div class="box-full">
             <!--CONTEUDO FOTO E TEXTO-->
             <div class="texto-foto mb">
               <div class="texto">
-                <h4><?php echo get_post_meta( get_the_ID(), 'titulo_segundo_bloco', true ); ?></h4>
-                <?php echo get_post_meta( get_the_ID(), 'texto_segundo_bloco', true ); ?>
+                <h4><?php echo get_custom_meta( get_the_ID(), 'titulo_segundo_bloco', true ); ?></h4>
+                <?php echo get_custom_meta( get_the_ID(), 'texto_segundo_bloco', true ); ?>
               </div>
-              <?php if (get_post_meta( get_the_ID(), 'imagem_segundo_bloco', true ) != ''){ ?>
+              <?php if (get_custom_meta( get_the_ID(), 'imagem_segundo_bloco', true ) != ''){ ?>
                 <div class="img_destaque" >
-                  <img src="<?php echo get_post_meta( get_the_ID(), 'imagem_segundo_bloco', true ); ?>" alt=""> 
+                  <img src="<?php echo get_custom_meta( get_the_ID(), 'imagem_segundo_bloco', true ); ?>" alt=""> 
                 </div>
               <?php } ?>
             </div>
@@ -65,7 +65,7 @@
         
         <!--CONTEUDO TAB LIST-->
 
-        <?php if (get_post_meta( get_the_ID(), 'pricipais_industrias', true ) == 1){ ?>
+        <?php if (get_custom_meta( get_the_ID(), 'pricipais_industrias', true ) == 1){ ?>
         <div class="cont_one_column mb">
             <h4 class="mb">Principais Indústrias</h4>
             <!--TAB LIST-->
@@ -144,14 +144,14 @@
         <!--FIM CONTEUDO TAB LIST-->
          
         
-        <?php if (get_post_meta( get_the_ID(), 'terceiro_bloco_visivel', true ) == 1
-                  || get_post_meta( get_the_ID(), 'solucoes_e_suporte_visivel', true ) == 1
-                  || get_post_meta( get_the_ID(), 'formulario_de_contato_visivel', true ) == 1){ 
+        <?php if (get_custom_meta( get_the_ID(), 'terceiro_bloco_visivel', true ) == 1
+                  || get_custom_meta( get_the_ID(), 'solucoes_e_suporte_visivel', true ) == 1
+                  || get_custom_meta( get_the_ID(), 'formulario_de_contato_visivel', true ) == 1){ 
 
 
-              if(get_post_meta( get_the_ID(), 'terceiro_bloco_visivel', true ) == 1 && 
-                (get_post_meta( get_the_ID(), 'solucoes_e_suporte_visivel', true ) == 1
-                || get_post_meta( get_the_ID(), 'formulario_de_contato_visivel', true ) == 1)
+              if(get_custom_meta( get_the_ID(), 'terceiro_bloco_visivel', true ) == 1 && 
+                (get_custom_meta( get_the_ID(), 'solucoes_e_suporte_visivel', true ) == 1
+                || get_custom_meta( get_the_ID(), 'formulario_de_contato_visivel', true ) == 1)
               ){
                 $class = 'cont_two_column';
               }else{
@@ -162,13 +162,13 @@
         <hr class="mb">
         <!--CONTEUDO EXTRA-->
         <div class="<?php echo $class;?> mb">
-        <?php if (get_post_meta( get_the_ID(), 'terceiro_bloco_visivel', true ) == 1){ ?>
+        <?php if (get_custom_meta( get_the_ID(), 'terceiro_bloco_visivel', true ) == 1){ ?>
           <div class="item">
-            <h4><?php echo get_post_meta( get_the_ID(), 'titulo_terceiro_bloco', true ); ?></h4>
-            <?php echo get_post_meta( get_the_ID(), 'texto_terceiro_bloco', true ); ?>
+            <h4><?php echo get_custom_meta( get_the_ID(), 'titulo_terceiro_bloco', true ); ?></h4>
+            <?php echo get_custom_meta( get_the_ID(), 'texto_terceiro_bloco', true ); ?>
           </div>
           <?php }    
-          if(get_post_meta( get_the_ID(), 'formulario_de_contato_visivel', true ) == 1){
+          if(get_custom_meta( get_the_ID(), 'formulario_de_contato_visivel', true ) == 1){
           ?>
           <div class="item border-left">
             <div class="cont_two_column">
@@ -183,7 +183,7 @@
           </div>
           <?php } ?>
 
-          <?php if(get_post_meta( get_the_ID(), 'formulario_de_contato_visivel', true ) == 1){ ?>
+          <?php if(get_custom_meta( get_the_ID(), 'formulario_de_contato_visivel', true ) == 1){ ?>
           <h4>Ficou com alguma dúvida?</h4>
           <p>Entre em contato conosco para saber mais sobre nossos serviços e como podemos ajudá-lo a transformar a gestão pública.</p>
           <!--FORMULARIO DE EMAIL-->
