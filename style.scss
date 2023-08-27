@@ -698,6 +698,58 @@ button {
   }
 }
 
+#contact-form-page {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  flex-direction: row;
+  .form-column {
+    flex: 1;
+    max-width: calc(50% - 10px);
+  }
+  
+  label, input, textarea {
+    display: block;
+    margin-bottom: 10px;
+    width: calc(100% - 30px);
+    border: 0;
+    background: $corCinzaClaro2;
+    padding: 15px;
+  }
+
+  textarea{
+    height: 80px;
+  }
+  
+  button {
+    width: 100%;
+  }
+}
+
+.icon-telfone::before{
+  content: "";
+  background: url(img/icon-telefone.png) no-repeat;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  margin-left: -25px;
+}
+
+.icon-email::before{
+  content: "";
+  background: url(img/icon-email.png) no-repeat;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  margin-left: -25px;
+}
+
+.icon-telfone,.icon-email{
+  display: block;
+  padding-left: 25px;
+  margin-bottom: 10px;
+}
+
 
 /*fim interna*/
 

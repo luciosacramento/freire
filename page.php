@@ -5,8 +5,8 @@
  * Description: Template criado para exibir Página interna com conteúdo simples (texto e imagem)
  *
  * @package WordPress
- * @subpackage tcm
- * @since TCM 1.0
+ * @subpackage freire
+ * @since FREIRE 1.0
  */
 
  get_header();
