@@ -4,28 +4,32 @@ get_header();
 
        <!--SLIDE SHOW-->
        <div id="header-carousel" data-flickity='{"autoPlay": true}'>
-        <div class="carousel-cell">
-          <img src="<?php bloginfo('template_url'); ?>/img/teste_slide_img.jpg" alt="Imagem 2">
-          <div class="text">Legenda da Imagem 2<span>Projetar, planejar e construir gestão pública com IA.</span></div>
-        </div>
-        <div class="carousel-cell">
-          <img src="<?php bloginfo('template_url'); ?>/img/teste_slide_img.jpg" alt="Imagem 2">
-          <div class="text">Legenda da Imagem 2<span>Projetar, planejar e construir gestão pública com IA.</span></div>
-        </div>
-        <div class="carousel-cell">
-          <img src="<?php bloginfo('template_url'); ?>/img/teste_slide_img.jpg" alt="Imagem 2">
-          <div class="text">Legenda da Imagem 2<span>Projetar, planejar e construir gestão pública com IA.</span></div>
-        </div>
-        <div class="carousel-cell">
-          <img src="<?php bloginfo('template_url'); ?>/img/teste_slide_img.jpg" alt="Imagem 2">
-          <div class="text">Legenda da Imagem 2<span>Projetar, planejar e construir gestão pública com IA.</span></div>
-        </div>
-        <div class="carousel-cell">
-          <img src="<?php bloginfo('template_url'); ?>/img/teste_slide_img.jpg" alt="Imagem 2">
-          <div class="text">Legenda da Imagem 2<span>Projetar, planejar e construir gestão pública com IA.</span></div>
-        </div>
-      </div>
 
+       <?php
+          $args = array(
+              'post_type' => 'page', // Tipo de postagem para páginas
+              'meta_key' => 'aparece_slide', // Nome do campo personalizado
+              'meta_value' => '1', // Valor desejado
+          );
+
+          $pages_query = new WP_Query($args);
+
+          if ($pages_query->have_posts()) :
+              while ($pages_query->have_posts()) : $pages_query->the_post();
+                 ?>
+                   <div class="carousel-cell">
+                    <img src="<?php  echo get_custom_meta( get_the_ID(), 'imagem_slide', true ); ?>" alt="<?php the_title(); ?>">
+                    <div class="text"><?php the_title(); ?><span><?php echo get_custom_meta( get_the_ID(), 'subtitulo', true ); ?></span></div>
+                  </div>
+                <?php
+              endwhile;
+              wp_reset_postdata(); // Restaura os dados originais do post
+          else :
+              // Caso não haja páginas encontradas com o campo personalizado
+              echo 'Nenhuma página encontrada.';
+          endif;
+          ?>
+      </div>
       <!--FIM SLIDE SHOW-->
       <!--SERVICOS-->
       <div class="box-full verde">

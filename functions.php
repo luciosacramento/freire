@@ -596,12 +596,9 @@ function salvar_campos_personalizados_pagina( $post_id ) {
     }
   }
   // Salvar valores dos campos personalizados
-    if ( isset( $_POST['aparece_slide'] ) ) {
     update_post_meta( $post_id, 'aparece_slide', sanitize_text_field( $_POST['aparece_slide'] ) );
-    }
-    if ( isset( $_POST['aparece_chamada'] ) ) {
+
     update_post_meta( $post_id, 'aparece_chamada', sanitize_text_field( $_POST['aparece_chamada'] ) );
-    }
 
     if(isset( $_POST['resumo_chamada'] )){ 
     update_post_meta( $post_id, 'resumo_chamada', $_POST['resumo_chamada'] ) ;
@@ -611,13 +608,9 @@ function salvar_campos_personalizados_pagina( $post_id ) {
     update_post_meta( $post_id, 'subtitulo', sanitize_text_field( $_POST['subtitulo'] ) );
     }
 
-    if ( isset( $_POST['aparece_projetos'] ) ) {
     update_post_meta( $post_id, 'aparece_projetos', sanitize_text_field( $_POST['aparece_projetos'] ) );
-    }
 
-    if ( isset( $_POST['aparece_ajuda'] ) ) {
-        update_post_meta( $post_id, 'aparece_ajuda', sanitize_text_field( $_POST['aparece_ajuda'] ) );
-        }
+    update_post_meta( $post_id, 'aparece_ajuda', sanitize_text_field( $_POST['aparece_ajuda'] ) );
 
     if ( isset( $_POST['segundo_bloco_visivel'] ) ) {
     update_post_meta( $post_id, 'segundo_bloco_visivel', sanitize_text_field( $_POST['segundo_bloco_visivel'] ) );

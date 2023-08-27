@@ -21,7 +21,7 @@
   <div class="titulo-interna">
                 <div>
                     <h1>
-                        <div>ERP para Gestão Pública</div>
+                        <div><?php the_title(); ?></div>
                     </h1>
                 </div>
             </div>
