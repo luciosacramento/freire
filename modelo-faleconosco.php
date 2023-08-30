@@ -46,7 +46,7 @@
           <!--FORMULARIO DE EMAIL-->
           <div class="item">
           <h4>Envie uma mensagem</h4>      
-            <form id="contact-form-page" method="post" action="php/enviar_email.php">
+            <form id="contact-form-page" method="post" action="<?php bloginfo('template_url'); ?>/php/enviar_email.php">
               <div class="form-column">
                 <input type="text" id="nome" name="nome" required placeholder="Nome">
                 <input type="email" id="email" name="email" required placeholder="E-mail">

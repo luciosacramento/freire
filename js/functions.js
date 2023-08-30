@@ -10,8 +10,6 @@ document.addEventListener('DOMContentLoaded', function () {
   
     if(document.querySelector('#header-carousel')){
 
-      console.log('tem carousel');
-
       var elem = document.querySelector('#header-carousel');
       var flkty = new Flickity( elem, {
         cellAlign: 'left',
@@ -70,11 +68,11 @@ document.addEventListener('DOMContentLoaded', function () {
             alert("E-mail enviado com sucesso!");
             form.reset();
           } else {
-            alert("Erro ao enviar o e-mail. Tente novamente mais tarde.");
+            alert("Erro ao enviar o e-mail. Tente novamente mais tarde."+form.getAttribute("action"));
           }
         })
         .catch((error) => {
-          alert("Erro ao enviar o e-mail. Tente novamente mais tarde.");
+          alert("Erro ao enviar o e-mail. Tente novamente mais tarde."+form.getAttribute("action"));
         });
     });
   }  

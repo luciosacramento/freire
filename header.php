@@ -45,28 +45,12 @@
 <header class="menu">
     <div class="logo"><a href="<?php echo get_home_url(); ?>"><img src="<?php bloginfo('template_url'); ?>/img/logo-cor.png" alt="Freire Tecnologia"></a></div>
     <nav class="menu-links">
-        <!--ul>
-        <li><a href="#">Soluções</a></li>
-        <li><a href="#">Indústrias</a></li>
-        <li class="has-submenu">
-            <a href="#">Freire Tecnologia</a>
-            <ul class="submenu">
-            <li><a href="#">Serviço 1</a></li>
-            <li><a href="#">Serviço 2</a></li>
-            <li><a href="#">Serviço 3</a></li>
-            </ul>
-        </li>
-        <li><a href="#">Carreira</a></li>
-        <li><a href="#">Fale Conosco</a></li>
-        </ul-->
-
         <?php
         wp_nav_menu(array(
             'theme_location' => 'header', // Substitua pelo nome da localização do seu menu
             'walker' => new Walker_Nav_Menu_Custom(),
         ));
         ?>
-
     </nav>
     <div class="social">
         <ul>

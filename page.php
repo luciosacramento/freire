@@ -188,7 +188,7 @@
           <p>Entre em contato conosco para saber mais sobre nossos serviços e como podemos ajudá-lo a transformar a gestão pública.</p>
           <!--FORMULARIO DE EMAIL-->
           <div class="form-container">
-            <form id="contact-form" method="post" action="php/enviar_email.php">
+            <form id="contact-form" method="post" action="<?php bloginfo('template_url'); ?>/php/enviar_email.php">
               <div class="form-column">
                 <input type="text" id="nome" name="nome" required placeholder="Nome">
                 <input type="email" id="email" name="email" required placeholder="E-mail">
